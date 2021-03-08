@@ -8,9 +8,13 @@
 <title>Página de Cadastro</title>
 </head>
 <body>
+
+
+
 	<h1 style="text-align: center">Cadastro de Usuário</h1>
 
-	<form action="salvarUsuario" method="post" id = "form-user-cadastro">
+	<h3>${msg}</h3>
+	<form action="salvarUsuario" method="post" id="form-user-cadastro">
 		<table>
 
 			<tr>
@@ -18,7 +22,7 @@
 				<td><input type="text" readonly="readonly" name="id"
 					value="${user.id}"></td>
 			</tr>
-			
+
 			<tr>
 				<td>Nome :</td>
 				<td><input type="text" name="nome" value="${user.nome}"></td>
@@ -37,10 +41,11 @@
 
 			<tr>
 				<td><input type="submit" value="Salvar"></td>
-				<td><input type="submit" value="Cancelar" onclick="document.getElementById('form-user-cadastro').action = 'salvarUsuario?acao=reset'"></td>
+				<td><input type="submit" value="Cancelar"
+					onclick="document.getElementById('form-user-cadastro').action = 'salvarUsuario?acao=reset'"></td>
 			</tr>
-		
-			
+
+
 		</table>
 	</form>
 

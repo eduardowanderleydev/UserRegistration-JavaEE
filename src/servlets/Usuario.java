@@ -64,10 +64,13 @@ public class Usuario extends HttpServlet {
 			user.setLogin(login);
 			user.setSenha(senha);
 			user.setNome(nome);
-
-			if (id == null || id.isEmpty()) {
+			
+			if(!userDAO.validateLogin(login)) {
+				request.setAttribute("msg", "Login already used");
+			}
+			if (id == null || id.isEmpty() && userDAO.validateLogin(login)) {
 				userDAO.insert(user);
-			} else {
+			} else if (id == null & id.isEmpty()){
 				userDAO.update(user);
 			}
 

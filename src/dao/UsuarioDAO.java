@@ -126,4 +126,21 @@ public class UsuarioDAO {
 		}
 	}
 	
+	public boolean validateLogin(String login) {
+
+		try {
+			String sql = "select count(1) as qtd from public.user where login = '" + login + "'";
+
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				return rs.getInt("qtd") <= 0;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }
