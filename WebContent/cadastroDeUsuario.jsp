@@ -13,6 +13,11 @@
 	<form action="salvarUsuario" method="post">
 		<table>
 			<tr>
+				<td>Nome :</td>
+				<td><input type="text" name="nome" value="${user.nome}"></td>
+			</tr>
+		
+			<tr>
 				<td>Id :</td>
 				<td><input type="text" readonly="readonly" name="id"
 					value="${user.id}"></td>
@@ -26,6 +31,8 @@
 				<td>Senha :</td>
 				<td><input type="password" name="senha" value="${user.senha}"></td>
 			</tr>
+			
+			
 
 			<tr>
 				<td><input type="submit" value="Salvar"></td>
@@ -34,14 +41,23 @@
 		</table>
 	</form>
 
-	<h1>Usuários cadastrados</h1>
-
 	<table>
+		
+		<caption>Usuarios Cadastrados</caption>
+	
+		<tr> 
+			<td>Id</td>
+			<td>Login</td>
+			<td>Nome</td>
+			<td>Excluir</td>
+			<td>Editar</td>
+		</tr>
+	
 		<c:forEach items="${list}" var="user">
 			<tr>
 				<td><c:out value="${user.id}" /></td>
 				<td><c:out value="${user.login}" /></td>
-				<td><c:out value="${user.senha}"></c:out></td>
+				<td><c:out value="${user.nome}"></c:out></td>
 				<td><a href="salvarUsuario?acao=delete&user=${user.login}">Excluir</a></td>
 				<td><a href="salvarUsuario?acao=edit&user=${user.login}">Editar</a></td>
 			</tr>

@@ -43,11 +43,13 @@ public class Usuario extends HttpServlet {
 		String id = request.getParameter("id");
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
+		String nome = request.getParameter("nome");
 		
 		BeanLogin user = new BeanLogin();
 		user.setId(!id.isEmpty() ? Long.parseLong(id) : 0);
 		user.setLogin(login);
 		user.setSenha(senha);
+		user.setNome(nome);
 		
 		if ( id == null || id.isEmpty()) {
 			userDAO.insert(user);
@@ -59,5 +61,4 @@ public class Usuario extends HttpServlet {
 		request.setAttribute("list", userDAO.findAll());
 		dispatcher.forward(request, response);
 	}
-
 }
