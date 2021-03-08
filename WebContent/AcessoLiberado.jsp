@@ -9,6 +9,6 @@
 <body>
 	<h1>Acesso Liberado</h1>
 	
-	<a href="cadastroDeUsuario.jsp">Cadastro</a>
+	<a href="salvarUsuario?acao=listarTodos">Cadastro</a>
 </body>
 </html>

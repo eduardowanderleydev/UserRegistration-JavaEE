@@ -64,9 +64,9 @@ public class UsuarioDAO {
 		return list;
 	}
 
-	public void delete(String login) {
+	public void delete(String id) {
 		try {
-			String sql = "delete from public.user where login = '" + login + "'";
+			String sql = "delete from public.user where id = '" + id + "'";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.execute();
 			conn.commit();
@@ -80,8 +80,8 @@ public class UsuarioDAO {
 		}
 	}
 
-	public BeanLogin findByName(String login) {
-		String sql = "select * from public.user where login = '" + login + "'";
+	public BeanLogin findByName(String id) {
+		String sql = "select * from public.user where id = '" + id + "'";
 		PreparedStatement ps;
 		
 		try {

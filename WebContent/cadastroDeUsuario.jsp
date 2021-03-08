@@ -10,18 +10,21 @@
 <body>
 	<h1 style="text-align: center">Cadastro de Usuário</h1>
 
-	<form action="salvarUsuario" method="post">
+	<form action="salvarUsuario" method="post" id = "form-user-cadastro">
 		<table>
-			<tr>
-				<td>Nome :</td>
-				<td><input type="text" name="nome" value="${user.nome}"></td>
-			</tr>
-		
+
 			<tr>
 				<td>Id :</td>
 				<td><input type="text" readonly="readonly" name="id"
 					value="${user.id}"></td>
 			</tr>
+			
+			<tr>
+				<td>Nome :</td>
+				<td><input type="text" name="nome" value="${user.nome}"></td>
+			</tr>
+
+
 			<tr>
 				<td>Login :</td>
 				<td><input type="text" name="login" value="${user.login}"></td>
@@ -31,35 +34,35 @@
 				<td>Senha :</td>
 				<td><input type="password" name="senha" value="${user.senha}"></td>
 			</tr>
-			
-			
 
 			<tr>
 				<td><input type="submit" value="Salvar"></td>
+				<td><input type="submit" value="Cancelar" onclick="document.getElementById('form-user-cadastro').action = 'salvarUsuario?acao=reset'"></td>
 			</tr>
-
+		
+			
 		</table>
 	</form>
 
 	<table>
-		
+
 		<caption>Usuarios Cadastrados</caption>
-	
-		<tr> 
+
+		<tr>
 			<td>Id</td>
 			<td>Login</td>
 			<td>Nome</td>
 			<td>Excluir</td>
 			<td>Editar</td>
 		</tr>
-	
+
 		<c:forEach items="${list}" var="user">
 			<tr>
 				<td><c:out value="${user.id}" /></td>
 				<td><c:out value="${user.login}" /></td>
 				<td><c:out value="${user.nome}"></c:out></td>
-				<td><a href="salvarUsuario?acao=delete&user=${user.login}">Excluir</a></td>
-				<td><a href="salvarUsuario?acao=edit&user=${user.login}">Editar</a></td>
+				<td><a href="salvarUsuario?acao=delete&user=${user.id}">Excluir</a></td>
+				<td><a href="salvarUsuario?acao=edit&user=${user.id}">Editar</a></td>
 			</tr>
 		</c:forEach>
 	</table>
