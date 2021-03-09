@@ -38,6 +38,11 @@
 				<td>Senha :</td>
 				<td><input type="password" name="senha" value="${user.senha}"></td>
 			</tr>
+			
+			<tr>
+				<td>Telefone :</td>
+				<td><input type="password" name="fone" value="${user.fone}"></td>
+			</tr>
 
 			<tr>
 				<td><input type="submit" value="Salvar"></td>
@@ -57,6 +62,7 @@
 			<td>Id</td>
 			<td>Login</td>
 			<td>Nome</td>
+			<td>Fone</td>
 			<td>Excluir</td>
 			<td>Editar</td>
 		</tr>
@@ -66,6 +72,7 @@
 				<td><c:out value="${user.id}" /></td>
 				<td><c:out value="${user.login}" /></td>
 				<td><c:out value="${user.nome}"></c:out></td>
+				<td><c:out value="${user.fone}"></c:out></td>
 				<td><a href="salvarUsuario?acao=delete&user=${user.id}">Excluir</a></td>
 				<td><a href="salvarUsuario?acao=edit&user=${user.id}">Editar</a></td>
 			</tr>

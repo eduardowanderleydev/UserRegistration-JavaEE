@@ -19,7 +19,7 @@ public class UsuarioDAO {
 	}
 
 	public void insert(BeanLogin user) {
-		String sql = "insert into public.user (login,senha,nome) values (?,?,?)";
+		String sql = "insert into public.user (login,senha,nome,fone) values (?,?,?,?)";
 		PreparedStatement ps;
 
 		try {
@@ -27,6 +27,7 @@ public class UsuarioDAO {
 			ps.setString(1, user.getLogin());
 			ps.setString(2, user.getSenha());
 			ps.setString(3, user.getNome());
+			ps.setString(4, user.getFone());
 			ps.execute();
 			conn.commit();
 		} catch (SQLException e) {
@@ -55,6 +56,7 @@ public class UsuarioDAO {
 				user.setLogin(rs.getString("login"));
 				user.setSenha(rs.getString("senha"));
 				user.setNome(rs.getString("nome"));
+				user.setFone(rs.getString("fone"));
 				list.add(user);
 			}
 
@@ -94,18 +96,18 @@ public class UsuarioDAO {
 				user.setLogin(rs.getString("login"));
 				user.setSenha(rs.getString("senha"));
 				user.setNome(rs.getString("nome"));
+				user.setFone(rs.getString("fone"));
 				
 				return user;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return null;
 	}
 
 	public void update(BeanLogin user) {
-		String sql = "update public.user set login = ?, senha = ?, nome = ? where id = " + user.getId();
+		String sql = "update public.user set login = ?, senha = ?, nome = ?, fone = ? where id = " + user.getId();
 		PreparedStatement ps;
 
 		try {
@@ -113,6 +115,7 @@ public class UsuarioDAO {
 			ps.setString(1, user.getLogin());
 			ps.setString(2, user.getSenha());
 			ps.setString(3, user.getNome());
+			ps.setString(4, user.getFone());
 			
 			ps.executeUpdate();
 			conn.commit();
@@ -125,6 +128,8 @@ public class UsuarioDAO {
 			}
 		}
 	}
+	
+	/* Validations */
 	
 	public boolean validateLogin(String login) {
 
@@ -143,4 +148,58 @@ public class UsuarioDAO {
 		}
 		return false;
 	}
+	
+	public boolean validateLoginUpdate(String login, String id) {
+
+		try {
+			String sql = "select count(1) as qtd from public.user where login = '" + login + "' and id <> " + id;
+
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				return rs.getInt("qtd") <= 0;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean validatePassword(String password) {
+		try {
+			String sql = "select count(1) as qtd from public.user where senha = '" + password + "'";
+
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				return rs.getInt("qtd") <= 0;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean validatePasswordUpdate(String password, String id) {
+
+		try {
+			String sql = "select count(1) as qtd from public.user where senha = '" + password + "' and id <> " + id;
+
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				return rs.getInt("qtd") <= 0;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 }

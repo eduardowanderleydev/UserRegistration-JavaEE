@@ -58,20 +58,34 @@ public class Usuario extends HttpServlet {
 			String login = request.getParameter("login");
 			String senha = request.getParameter("senha");
 			String nome = request.getParameter("nome");
+			String fone = request.getParameter("fone");
 
 			BeanLogin user = new BeanLogin();
 			user.setId(!id.isEmpty() ? Long.parseLong(id) : 0);
 			user.setLogin(login);
 			user.setSenha(senha);
 			user.setNome(nome);
-			
-			if(!userDAO.validateLogin(login)) {
-				request.setAttribute("msg", "Login already used");
+			user.setFone(fone);
+
+			if (!userDAO.validateLogin(login)) {
+				request.setAttribute("msg", "Login already exists");
 			}
-			if (id == null || id.isEmpty() && userDAO.validateLogin(login)) {
+
+			if (!userDAO.validatePassword(senha)) {
+				request.setAttribute("msg", "Password already exists");
+			}
+
+			if (id == null || id.isEmpty() && userDAO.validateLogin(login) && userDAO.validatePassword(senha)) {
 				userDAO.insert(user);
-			} else if (id == null & id.isEmpty()){
-				userDAO.update(user);
+			} else if (id == null & id.isEmpty()) {
+				if (!userDAO.validateLoginUpdate(login, id)) {
+					request.setAttribute("msg", "Login already exists");
+				}else if (!userDAO.validatePasswordUpdate(senha, id)) {
+					request.setAttribute("msg", "Password already exists");
+				}
+				else {
+					userDAO.update(user);
+				}
 			}
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeUsuario.jsp");

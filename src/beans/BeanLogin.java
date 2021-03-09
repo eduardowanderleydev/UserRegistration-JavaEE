@@ -4,11 +4,20 @@ public class BeanLogin {
 
 	private Long id;
 	private String nome;
+	private String fone;
 	private String login;
 	private String senha;
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getFone() {
+		return fone;
+	}
+
+	public void setFone(String fone) {
+		this.fone = fone;
 	}
 
 	public void setId(Long id) {
