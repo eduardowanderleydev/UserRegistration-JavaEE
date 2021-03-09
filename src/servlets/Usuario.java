@@ -47,6 +47,7 @@ public class Usuario extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		String acao = request.getParameter("acao");
 
 		if (acao != null && acao.equalsIgnoreCase("reset")) {
@@ -61,31 +62,37 @@ public class Usuario extends HttpServlet {
 			String fone = request.getParameter("fone");
 
 			BeanLogin user = new BeanLogin();
-			user.setId(!id.isEmpty() ? Long.parseLong(id) : 0);
+			user.setId(!id.isEmpty() ? Long.parseLong(id) : null);
 			user.setLogin(login);
 			user.setSenha(senha);
 			user.setNome(nome);
 			user.setFone(fone);
-
-			if (!userDAO.validateLogin(login)) {
-				request.setAttribute("msg", "Login already exists");
+			
+			String msg = null;
+			boolean podeInserir = true;
+			
+			if (id == null || id.isEmpty() && !userDAO.validateLogin(login)) {
+				msg = "Login already exists";
+				podeInserir = false;
 			}
 
-			if (!userDAO.validatePassword(senha)) {
-				request.setAttribute("msg", "Password already exists");
+			if (id == null || id.isEmpty() && !userDAO.validatePassword(senha)) {
+				msg = "Password already exists";
+				podeInserir = false;
 			}
+			
+			if ( msg != null) {
+				request.setAttribute("msg", msg);
+			}
+			
 
-			if (id == null || id.isEmpty() && userDAO.validateLogin(login) && userDAO.validatePassword(senha)) {
+			if (id == null || id.isEmpty() && podeInserir) {
 				userDAO.insert(user);
-			} else if (id == null & id.isEmpty()) {
-				if (!userDAO.validateLoginUpdate(login, id)) {
-					request.setAttribute("msg", "Login already exists");
-				}else if (!userDAO.validatePasswordUpdate(senha, id)) {
-					request.setAttribute("msg", "Password already exists");
-				}
-				else {
-					userDAO.update(user);
-				}
+			} else if ( id != null || !id.isEmpty() && podeInserir) {
+				userDAO.update(user);
+			} 
+			if (!podeInserir) {
+				request.setAttribute("user", user);
 			}
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeUsuario.jsp");
