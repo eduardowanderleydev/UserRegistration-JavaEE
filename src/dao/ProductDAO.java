@@ -42,14 +42,12 @@ public class ProductDAO {
 	}
 
 	public void delete(String id) {
-		String sql = "delete from public.product where id = " + id;
+		String sql = "delete from public.product where id = '" + id + "'";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
-
-			ps.executeUpdate();
+			ps.execute();
 			conn.commit();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 			try {

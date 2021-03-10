@@ -23,9 +23,15 @@ public class ProductServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String acao = request.getParameter("acao");
+		String productId = request.getParameter("product");
 		
 		if (acao.equals("list")) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroDeProduto.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
+			request.setAttribute("list", productDAO.findAll());
+			dispatcher.forward(request, response);
+		} else if (acao.equals("delete")) {
+			productDAO.delete(productId);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
 			request.setAttribute("list", productDAO.findAll());
 			dispatcher.forward(request, response);
 		}
@@ -45,7 +51,7 @@ public class ProductServlet extends HttpServlet {
 		
 		productDAO.insert(product);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("cadastroDeProduto.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
 		request.setAttribute("list", productDAO.findAll());
 		dispatcher.forward(request, response);
 	}
