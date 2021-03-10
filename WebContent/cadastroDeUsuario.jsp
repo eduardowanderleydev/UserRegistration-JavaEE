@@ -9,8 +9,6 @@
 </head>
 <body>
 
-
-
 	<h1 style="text-align: center">Cadastro de Usuário</h1>
 
 	<h3>${msg}</h3>
@@ -69,7 +67,7 @@
 
 		<c:forEach items="${list}" var="user">
 			<tr>
-				<td><c:out value="${user.id}" /></td>
+				<td><c:out value="${user.id}"/></td>
 				<td><c:out value="${user.login}" /></td>
 				<td><c:out value="${user.nome}"></c:out></td>
 				<td><c:out value="${user.fone}"></c:out></td>

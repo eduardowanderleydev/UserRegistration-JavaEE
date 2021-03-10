@@ -10,15 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.BeanLogin;
-import dao.UsuarioDAO;
+import dao.UserDAO;
 
 @WebServlet("/salvarUsuario")
-public class Usuario extends HttpServlet {
+public class UsuarioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	UsuarioDAO userDAO = new UsuarioDAO();
+	UserDAO userDAO = new UserDAO();
 
-	public Usuario() {
+	public UsuarioServlet() {
 		super();
 	}
 
@@ -90,7 +90,8 @@ public class Usuario extends HttpServlet {
 				userDAO.insert(user);
 			} else if ( id != null || !id.isEmpty() && podeInserir) {
 				userDAO.update(user);
-			} 
+			}
+			
 			if (!podeInserir) {
 				request.setAttribute("user", user);
 			}
