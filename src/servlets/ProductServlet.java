@@ -38,6 +38,11 @@ public class ProductServlet extends HttpServlet {
 			BeanProduct product = productDAO.findById(productId);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
 			request.setAttribute("product", product);
+			request.setAttribute("list", productDAO.findAll());
+			dispatcher.forward(request, response);
+		} else if (acao.equals("reset")) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
+			request.setAttribute("list", productDAO.findAll());
 			dispatcher.forward(request, response);
 		}
 	}
@@ -54,14 +59,23 @@ public class ProductServlet extends HttpServlet {
 		product.setPrice(Double.parseDouble(price));
 		product.setQuantity(Integer.parseInt(quantity));
 		
-		if (productDAO.findById(id) != null) {
-			productDAO.update(product);
-		}else {
+		boolean podeInserir = true;
+		String msg = "";
+		
+		if (!productDAO.validateProductName(name)) {
+			podeInserir = false;
+			msg = "Product name already exists";
+		}
+		
+		if (id == null || id.isEmpty() && podeInserir ) {
 			productDAO.insert(product);
+		}else if (id != null || !id.isEmpty() && podeInserir){
+			productDAO.update(product);
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
 		request.setAttribute("list", productDAO.findAll());
+		request.setAttribute("msg", msg);
 		dispatcher.forward(request, response);
 	}
 

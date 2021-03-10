@@ -19,7 +19,7 @@ public class ProductDAO {
 	}
 
 	public void insert(BeanProduct product) {
-		String sql = "insert into public.product (nome, qtd, valor) values (?,?,?)";
+		String sql = "INSERT INTO public.product (nome, qtd, valor) VALUES (?,?,?);";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -127,4 +127,24 @@ public class ProductDAO {
 		}
 	}
 
+	/* Validations */
+	
+	public boolean validateProductName(String name) {
+		String sql = "select count (1) as qtd from public.product where nome = '" + name + "'";
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if (rs.next()) {
+				return rs.getInt("qtd") <= 0;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 }
