@@ -39,7 +39,7 @@
 			
 			<tr>
 				<td>Telefone :</td>
-				<td><input type="password" name="fone" value="${user.fone}"></td>
+				<td><input type="text" name="fone" value="${user.fone}"></td>
 			</tr>
 
 			<tr>

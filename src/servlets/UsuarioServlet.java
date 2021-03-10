@@ -34,7 +34,7 @@ public class UsuarioServlet extends HttpServlet {
 			request.setAttribute("list", userDAO.findAll());
 			dispatcher.forward(request, response);
 		} else if (acao.equals("edit")) {
-			BeanLogin userEdit = userDAO.findByName(user);
+			BeanLogin userEdit = userDAO.findById(user);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeUsuario.jsp");
 			request.setAttribute("user", userEdit);
 			dispatcher.forward(request, response);

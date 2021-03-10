@@ -60,7 +60,7 @@
 				<td> <c:out value="${product.quantity}"/> </td>
 				<td> <c:out value="${product.price}"/> </td>
 				<td> <a href="ProductServlet?acao=delete&product=${product.id}">Delete</a> </td>
-				<td> <a href="" >Edit</a> </td>
+				<td> <a href="ProductServlet?acao=edit&product=${product.id}" >Edit</a> </td>
 			</tr>
 			
 		</c:forEach>

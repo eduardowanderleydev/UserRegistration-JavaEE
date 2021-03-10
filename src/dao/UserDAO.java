@@ -82,7 +82,7 @@ public class UserDAO {
 		}
 	}
 
-	public BeanLogin findByName(String id) {
+	public BeanLogin findById(String id) {
 		String sql = "select * from public.user where id = '" + id + "'";
 		PreparedStatement ps;
 		

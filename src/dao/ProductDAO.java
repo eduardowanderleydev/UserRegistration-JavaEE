@@ -83,27 +83,30 @@ public class ProductDAO {
 	}
 
 	public BeanProduct findById(String id) {
-		String sql = "select * from public.product where id = " + id;
-		BeanProduct product = new BeanProduct();
+		String sql = "SELECT id, nome, qtd, valor FROM public.product WHERE id = " + id;
+		
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-
+			
 			if (rs.next()) {
+				BeanProduct product = new BeanProduct();
 				product.setId(rs.getLong("id"));
 				product.setName(rs.getString("nome"));
 				product.setPrice(rs.getDouble("valor"));
 				product.setQuantity(rs.getInt("qtd"));
+				
+				return product;
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return product;
+		return null;
 	}
 
 	public void update(BeanProduct product) {
-		String sql = "update public.product set nome = ?, qtd = ?, valor = ?";
+		String sql = "update public.product set nome = ?, qtd = ?, valor = ? where id = " + product.getId();
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
