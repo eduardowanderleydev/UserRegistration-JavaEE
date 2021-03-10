@@ -79,6 +79,10 @@ public class ProductServlet extends HttpServlet {
 		} else if (id != null || !id.isEmpty() && podeInserir) {
 			productDAO.update(product);
 		}
+		
+		if (!podeInserir) {
+			request.setAttribute("product", product);
+		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
 		request.setAttribute("list", productDAO.findAll());

@@ -47,7 +47,7 @@ public class UsuarioServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String acao = request.getParameter("acao");
 
 		if (acao != null && acao.equalsIgnoreCase("reset")) {
@@ -67,31 +67,49 @@ public class UsuarioServlet extends HttpServlet {
 			user.setSenha(senha);
 			user.setNome(nome);
 			user.setFone(fone);
-			
+
 			String msg = null;
 			boolean podeInserir = true;
 			
-			if (id == null || id.isEmpty() && !userDAO.validateLogin(login)) {
-				msg = "Login already exists";
+			/*Checks the fields validations */
+			if (login == null || login.isEmpty()) {
 				podeInserir = false;
+				msg = "Login cannot be empty";
+			} 
+			else if ( nome == null || nome.isEmpty()) {
+				podeInserir = false;
+				msg = "Name cannot be empty";
+			} else if (senha == null || senha.isEmpty()) {
+				podeInserir = false;
+				msg = "Password cannot be empty";
 			}
-
-			if (id == null || id.isEmpty() && !userDAO.validatePassword(senha)) {
-				msg = "Password already exists";
+			else if (fone == null || fone.isEmpty()) {
 				podeInserir = false;
+				msg = "Phone number cannot be empty";
+			}
+			else {
+				/* Checks the validation of occurrence in the database */
+				if (id == null || id.isEmpty() && !userDAO.validateLogin(login)) {
+					msg = "Login already exists";
+					podeInserir = false;
+				}
+
+				if (id == null || id.isEmpty() && !userDAO.validatePassword(senha)) {
+					msg = "Password already exists";
+					podeInserir = false;
+				}
 			}
 			
-			if ( msg != null) {
+			if (msg != null) {
 				request.setAttribute("msg", msg);
 			}
-			
 
 			if (id == null || id.isEmpty() && podeInserir) {
 				userDAO.insert(user);
-			} else if ( id != null || !id.isEmpty() && podeInserir) {
+			} else if (id != null || !id.isEmpty() && podeInserir) {
 				userDAO.update(user);
 			}
-			
+
 			if (!podeInserir) {
 				request.setAttribute("user", user);
 			}
