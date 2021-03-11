@@ -12,7 +12,8 @@
 	<h1 style="text-align: center">Cadastro de Produtos</h1>
 
 	<h3>${msg}</h3>
-	<form action="ProductServlet" method="post" id="form-product">
+	<form action="ProductServlet" method="post" id="form-product"
+		onsubmit="return validarCampos() ? true : false;">
 		<table>
 			<tr>
 				<td>Id :</td>
@@ -22,20 +23,20 @@
 
 			<tr>
 				<td>Nome :</td>
-				<td><input type="text" name="name" value="${product.name}">
-				</td>
+				<td><input type="text" name="name" id="name"
+					value="${product.name}"></td>
 			</tr>
 
 			<tr>
 				<td>Quantidade :</td>
-				<td><input type="text" name="quantity"
+				<td><input type="text" name="quantity" id="quantity"
 					value="${product.quantity}"></td>
 			</tr>
 
 			<tr>
 				<td>Preço :</td>
-				<td><input type="text" name="price" value="${product.price}">
-				</td>
+				<td><input type="text" name="price" id="price"
+					value="${product.price}"></td>
 			</tr>
 
 			<tr>
@@ -72,5 +73,24 @@
 
 		</c:forEach>
 	</table>
+
+	<script type="text/javascript">
+		function validarCampos() {
+			if (document.getElementById('name').value == '') {
+				alert("Name cannot be empty");
+				return false;
+			}
+			if (document.getElementById('quantity').value == '') {
+				alert("Quantity cannot be empty");
+				return false;
+			}
+			if (document.getElementById('price').value == '') {
+				alert("Price cannot be empty");
+				return false;
+			}
+			return true;
+		}
+	</script>
+
 </body>
 </html>
