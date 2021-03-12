@@ -6,6 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Página de Cadastro</title>
+
+<!-- Adicionando JQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	crossorigin="anonymous"></script>
+
 </head>
 <body>
 	<a href="AcessoLiberado.jsp" title="voltar para o inicio">Inicio</a> |
@@ -46,6 +52,38 @@
 				<td>Telefone :</td>
 				<td><input type="text" name="fone" id="fone"
 					value="${user.fone}"></td>
+			</tr>
+
+			<tr>
+				<td>Cep :</td>
+				<td><input type="text" name="cep" id="cep" value=""
+					onblur="consultarCep()"></td>
+			</tr>
+
+			<tr>
+				<td>Rua :</td>
+				<td><input type="text" name="rua" id="rua" value=""></td>
+			</tr>
+
+
+			<tr>
+				<td>Bairro :</td>
+				<td><input type="text" name="bairro" id="bairro" value=""></td>
+			</tr>
+
+			<tr>
+				<td>Cidade :</td>
+				<td><input type="text" name="cidade" id="cidade" value=""></td>
+			</tr>
+
+			<tr>
+				<td>Estado :</td>
+				<td><input type="text" name="estado" id="estado" value=""></td>
+			</tr>
+
+			<tr>
+				<td>IBGE :</td>
+				<td><input type="text" name="ibge" id="ibge" value=""></td>
 			</tr>
 
 			<tr>
@@ -99,6 +137,32 @@
 				return false;
 			}
 			return true;
+		}
+
+		function consultarCep() {
+			var cep = $("#cep").val();
+
+			$.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?",
+					function(dados) {
+
+						if (!("erro" in dados)) {
+							$("#rua").val(dados.logradouro);
+                            $("#bairro").val(dados.bairro);
+                            $("#cidade").val(dados.localidade);
+                            $("#estado").val(dados.estado);
+                            $("#ibge").val(dados.ibge);
+						} else {
+							
+							$("#cep").val('');
+							$("#rua").val('');
+                            $("#bairro").val('');
+                            $("#cidade").val('');
+                            $("#estado").val('');
+                            $("#ibge").val('');
+							
+							alert("CEP não encontrado.");
+						}
+					});
 		}
 	</script>
 
