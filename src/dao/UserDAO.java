@@ -19,7 +19,7 @@ public class UserDAO {
 	}
 
 	public void insert(BeanLogin user) {
-		String sql = "insert into public.user (login,senha,nome,fone) values (?,?,?,?)";
+		String sql = "insert into public.user (login,senha,nome,fone,cep,rua,bairro,cidade,estado,ibge) values (?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement ps;
 
 		try {
@@ -28,6 +28,12 @@ public class UserDAO {
 			ps.setString(2, user.getSenha());
 			ps.setString(3, user.getNome());
 			ps.setString(4, user.getFone());
+			ps.setString(5, user.getCep());
+			ps.setString(6, user.getRua());
+			ps.setString(7, user.getBairro());
+			ps.setString(8, user.getCidade());
+			ps.setString(9, user.getEstado());
+			ps.setString(10, user.getIbge());
 			ps.execute();
 			conn.commit();
 		} catch (SQLException e) {
@@ -57,6 +63,12 @@ public class UserDAO {
 				user.setSenha(rs.getString("senha"));
 				user.setNome(rs.getString("nome"));
 				user.setFone(rs.getString("fone"));
+				user.setCep(rs.getString("cep"));
+				user.setRua(rs.getString("rua"));
+				user.setBairro(rs.getString("bairro"));
+				user.setCidade(rs.getString("cidade"));
+				user.setEstado(rs.getString("estado"));
+				user.setIbge(rs.getString("ibge"));
 				list.add(user);
 			}
 
@@ -85,19 +97,24 @@ public class UserDAO {
 	public BeanLogin findById(String id) {
 		String sql = "select * from public.user where id = '" + id + "'";
 		PreparedStatement ps;
-		
+
 		try {
 			ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				BeanLogin user = new BeanLogin();
 				user.setId(rs.getLong("id"));
 				user.setLogin(rs.getString("login"));
 				user.setSenha(rs.getString("senha"));
 				user.setNome(rs.getString("nome"));
 				user.setFone(rs.getString("fone"));
-				
+				user.setCep(rs.getString("cep"));
+				user.setRua(rs.getString("rua"));
+				user.setBairro(rs.getString("bairro"));
+				user.setCidade(rs.getString("cidade"));
+				user.setEstado(rs.getString("estado"));
+				user.setIbge(rs.getString("ibge"));
 				return user;
 			}
 		} catch (SQLException e) {
@@ -107,7 +124,8 @@ public class UserDAO {
 	}
 
 	public void update(BeanLogin user) {
-		String sql = "update public.user set login = ?, senha = ?, nome = ?, fone = ? where id = " + user.getId();
+		String sql = "update public.user set login = ?, senha = ?, nome = ?, fone = ?, cep = ?, rua = ?, "
+				+ "bairro = ?, cidade = ?, estado = ?, ibge = ? where id = " + user.getId();
 		PreparedStatement ps;
 
 		try {
@@ -116,7 +134,12 @@ public class UserDAO {
 			ps.setString(2, user.getSenha());
 			ps.setString(3, user.getNome());
 			ps.setString(4, user.getFone());
-			
+			ps.setString(5, user.getCep());
+			ps.setString(6, user.getRua());
+			ps.setString(7, user.getBairro());
+			ps.setString(8, user.getCidade());
+			ps.setString(9, user.getEstado());
+			ps.setString(10, user.getIbge());
 			ps.executeUpdate();
 			conn.commit();
 		} catch (SQLException e) {
@@ -128,9 +151,9 @@ public class UserDAO {
 			}
 		}
 	}
-	
+
 	/* Validations */
-	
+
 	public boolean validateLogin(String login) {
 
 		try {
@@ -148,7 +171,7 @@ public class UserDAO {
 		}
 		return false;
 	}
-	
+
 	public boolean validateLoginUpdate(String login, String id) {
 
 		try {
@@ -166,7 +189,7 @@ public class UserDAO {
 		}
 		return false;
 	}
-	
+
 	public boolean validatePassword(String password) {
 		try {
 			String sql = "select count(1) as qtd from public.user where senha = '" + password + "'";
@@ -183,7 +206,7 @@ public class UserDAO {
 		}
 		return false;
 	}
-	
+
 	public boolean validatePasswordUpdate(String password, String id) {
 
 		try {
@@ -201,5 +224,5 @@ public class UserDAO {
 		}
 		return false;
 	}
-	
+
 }

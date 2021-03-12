@@ -37,6 +37,7 @@ public class UsuarioServlet extends HttpServlet {
 			BeanLogin userEdit = userDAO.findById(user);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeUsuario.jsp");
 			request.setAttribute("user", userEdit);
+			request.setAttribute("list", userDAO.findAll());
 			dispatcher.forward(request, response);
 		} else if (acao.equalsIgnoreCase("listartodos")) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeUsuario.jsp");
@@ -60,6 +61,13 @@ public class UsuarioServlet extends HttpServlet {
 			String senha = request.getParameter("senha");
 			String nome = request.getParameter("nome");
 			String fone = request.getParameter("fone");
+			
+			String cep = request.getParameter("cep");
+			String rua = request.getParameter("rua");
+			String bairro = request.getParameter("bairro");
+			String cidade = request.getParameter("cidade");
+			String estado = request.getParameter("estado");
+			String ibge = request.getParameter("ibge");
 
 			BeanLogin user = new BeanLogin();
 			user.setId(!id.isEmpty() ? Long.parseLong(id) : null);
@@ -67,6 +75,13 @@ public class UsuarioServlet extends HttpServlet {
 			user.setSenha(senha);
 			user.setNome(nome);
 			user.setFone(fone);
+			
+			user.setCep(cep);
+			user.setRua(rua);
+			user.setBairro(bairro);
+			user.setCidade(cidade);
+			user.setEstado(estado);
+			user.setIbge(ibge);
 
 			String msg = null;
 			boolean podeInserir = true;

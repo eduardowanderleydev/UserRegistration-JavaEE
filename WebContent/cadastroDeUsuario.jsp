@@ -27,12 +27,20 @@
 				<td>Id :</td>
 				<td><input type="text" readonly="readonly" name="id"
 					value="${user.id}"></td>
+
+				<td>Rua :</td>
+				<td><input type="text" name="rua" id="rua" value="${user.rua}"></td>
+
 			</tr>
 
 			<tr>
 				<td>Nome :</td>
 				<td><input type="text" name="nome" id="nome"
 					value="${user.nome}"></td>
+
+				<td>Bairro :</td>
+				<td><input type="text" name="bairro" id="bairro" value="${user.bairro}"></td>
+
 			</tr>
 
 
@@ -40,50 +48,36 @@
 				<td>Login :</td>
 				<td><input type="text" name="login" id="login"
 					value="${user.login}"></td>
+
+				<td>Cidade :</td>
+				<td><input type="text" name="cidade" id="cidade" value="${user.cidade}"></td>
+
 			</tr>
 
 			<tr>
 				<td>Senha :</td>
 				<td><input type="password" name="senha" id="senha"
 					value="${user.senha}"></td>
+
+				<td>Estado :</td>
+				<td><input type="text" name="estado" id="estado" value="${user.estado}"></td>
+
 			</tr>
 
 			<tr>
 				<td>Telefone :</td>
 				<td><input type="text" name="fone" id="fone"
 					value="${user.fone}"></td>
+
+				<td>IBGE :</td>
+				<td><input type="text" name="ibge" id="ibge" value="${user.ibge}"></td>
+
 			</tr>
 
 			<tr>
 				<td>Cep :</td>
-				<td><input type="text" name="cep" id="cep" value=""
+				<td><input type="text" name="cep" id="cep" value="${user.cep}"
 					onblur="consultarCep()"></td>
-			</tr>
-
-			<tr>
-				<td>Rua :</td>
-				<td><input type="text" name="rua" id="rua" value=""></td>
-			</tr>
-
-
-			<tr>
-				<td>Bairro :</td>
-				<td><input type="text" name="bairro" id="bairro" value=""></td>
-			</tr>
-
-			<tr>
-				<td>Cidade :</td>
-				<td><input type="text" name="cidade" id="cidade" value=""></td>
-			</tr>
-
-			<tr>
-				<td>Estado :</td>
-				<td><input type="text" name="estado" id="estado" value=""></td>
-			</tr>
-
-			<tr>
-				<td>IBGE :</td>
-				<td><input type="text" name="ibge" id="ibge" value=""></td>
 			</tr>
 
 			<tr>
@@ -91,7 +85,6 @@
 				<td><input type="submit" value="Cancelar"
 					onclick="document.getElementById('form-user-cadastro').action = 'salvarUsuario?acao=reset'"></td>
 			</tr>
-
 
 		</table>
 	</form>
@@ -105,6 +98,12 @@
 			<td>Login</td>
 			<td>Nome</td>
 			<td>Fone</td>
+			<td>CEP</td>
+			<td>Rua</td>
+			<td>Bairro</td>
+			<td>Cidade</td>
+			<td>Estado</td>
+			<td>Ibge</td>
 			<td>Excluir</td>
 			<td>Editar</td>
 		</tr>
@@ -115,6 +114,12 @@
 				<td><c:out value="${user.login}" /></td>
 				<td><c:out value="${user.nome}"></c:out></td>
 				<td><c:out value="${user.fone}"></c:out></td>
+				<td><c:out value="${user.cep}"></c:out></td>
+				<td><c:out value="${user.rua}"></c:out></td>
+				<td><c:out value="${user.bairro}"></c:out></td>
+				<td><c:out value="${user.cidade}"></c:out></td>
+				<td><c:out value="${user.estado}"></c:out></td>
+				<td><c:out value="${user.ibge}"></c:out></td>
 				<td><a href="salvarUsuario?acao=delete&user=${user.id}">Excluir</a></td>
 				<td><a href="salvarUsuario?acao=edit&user=${user.id}">Editar</a></td>
 			</tr>
@@ -147,19 +152,19 @@
 
 						if (!("erro" in dados)) {
 							$("#rua").val(dados.logradouro);
-                            $("#bairro").val(dados.bairro);
-                            $("#cidade").val(dados.localidade);
-                            $("#estado").val(dados.estado);
-                            $("#ibge").val(dados.ibge);
+							$("#bairro").val(dados.bairro);
+							$("#cidade").val(dados.localidade);
+							$("#estado").val(dados.estado);
+							$("#ibge").val(dados.ibge);
 						} else {
-							
+
 							$("#cep").val('');
 							$("#rua").val('');
-                            $("#bairro").val('');
-                            $("#cidade").val('');
-                            $("#estado").val('');
-                            $("#ibge").val('');
-							
+							$("#bairro").val('');
+							$("#cidade").val('');
+							$("#estado").val('');
+							$("#ibge").val('');
+
 							alert("CEP não encontrado.");
 						}
 					});
