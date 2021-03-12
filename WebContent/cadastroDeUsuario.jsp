@@ -8,7 +8,8 @@
 <title>Página de Cadastro</title>
 </head>
 <body>
-
+	<a href="AcessoLiberado.jsp" title="voltar para o inicio">Inicio</a> |
+	<a href="Login.jsp" title="Deslogar">Sair</a>
 	<h1 style="text-align: center">Cadastro de Usuário</h1>
 
 	<h3>${msg}</h3>

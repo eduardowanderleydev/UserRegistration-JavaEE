@@ -8,7 +8,8 @@
 <title>Cadastro de Produtos</title>
 </head>
 <body>
-
+	<a href="AcessoLiberado.jsp" title="voltar para o inicio">Inicio</a> |
+	<a href="Login.jsp" title="Deslogar">Sair</a>
 	<h1 style="text-align: center">Cadastro de Produtos</h1>
 
 	<h3>${msg}</h3>
