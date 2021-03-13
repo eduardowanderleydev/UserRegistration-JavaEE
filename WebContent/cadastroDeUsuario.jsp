@@ -25,21 +25,21 @@
 			<tr>
 				<td>Id :</td>
 				<td><input type="text" readonly="readonly" name="id"
-					value="${user.id}"></td>
+					value="${user.id}" placeholder="Gerado automaticamente"></td>
 
 				<td>Rua :</td>
-				<td><input type="text" name="rua" id="rua" value="${user.rua}"></td>
+				<td><input type="text" name="rua" id="rua" value="${user.rua}" placeholder="Digite o nome da rua"></td>
 
 			</tr>
 
 			<tr>
 				<td>Nome :</td>
 				<td><input type="text" name="nome" id="nome"
-					value="${user.nome}"></td>
+					value="${user.nome}" placeholder="Digite o nome do usuário" ></td>
 
 				<td>Bairro :</td>
 				<td><input type="text" name="bairro" id="bairro"
-					value="${user.bairro}"></td>
+					value="${user.bairro}" placeholder="Digite o nome do bairro"></td>
 
 			</tr>
 
@@ -47,40 +47,40 @@
 			<tr>
 				<td>Login :</td>
 				<td><input type="text" name="login" id="login"
-					value="${user.login}"></td>
+					value="${user.login}" placeholder="Digite o login do usuario"></td>
 
 				<td>Cidade :</td>
 				<td><input type="text" name="cidade" id="cidade"
-					value="${user.cidade}"></td>
+					value="${user.cidade}" placeholder="Digite o nome da cidade"></td>
 
 			</tr>
 
 			<tr>
 				<td>Senha :</td>
 				<td><input type="password" name="senha" id="senha"
-					value="${user.senha}"></td>
+					value="${user.senha}" placeholder="Digite a senha do usuário"></td>
 
 				<td>Estado :</td>
 				<td><input type="text" name="estado" id="estado"
-					value="${user.estado}"></td>
+					value="${user.estado}" placeholder="Digite o nome do estado"></td>
 
 			</tr>
 
 			<tr>
 				<td>Telefone :</td>
 				<td><input type="text" name="fone" id="fone"
-					value="${user.fone}"></td>
+					value="${user.fone}" placeholder="Digite o número de telefone"></td>
 
 				<td>IBGE :</td>
 				<td><input type="text" name="ibge" id="ibge"
-					value="${user.ibge}"></td>
+					value="${user.ibge}" placeholder="Digite o número do IBGE"></td>
 
 			</tr>
 
 			<tr>
 				<td>Cep :</td>
 				<td><input type="text" name="cep" id="cep" value="${user.cep}"
-					onblur="consultarCep()"></td>
+					onblur="consultarCep()" placeholder="Digite o CEP"></td>
 			</tr>
 
 			<tr>
