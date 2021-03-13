@@ -63,7 +63,7 @@
 				<td><c:out value="${phone.id}" /></td>
 				<td><c:out value="${phone.number}" /></td>
 				<td><c:out value="${phone.type}"></c:out></td>
-				<td><a href="PhoneServlet?acao=delete&phone=${phone.id}">Excluir</a></td>
+				<td><a href="PhoneServlet?acao=delete&phone=${phone.id}&user=${choosedUser.id}">Excluir</a></td>
 			</tr>
 		</c:forEach>
 	</table>

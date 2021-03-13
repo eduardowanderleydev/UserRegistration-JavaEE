@@ -20,34 +20,49 @@ public class PhoneServlet extends HttpServlet {
 
 	private UserDAO userDAO = new UserDAO();
 	private PhoneDAO phoneDAO = new PhoneDAO();
-	
+
 	public PhoneServlet() {
 		super();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String acao = request.getParameter("acao");
-		long phoneId = Long.parseLong(request.getParameter("phone"));
-		String userId = request.getParameter("user");
-		BeanLogin user = userDAO.findById(userId);
-		long idLong = Long.parseLong(userId);
-		
-		if (acao != null && acao.equalsIgnoreCase("delete")) {
+
+		if (acao.equalsIgnoreCase("list")) {
+
+			String userId = request.getParameter("user");
+			BeanLogin user = userDAO.findById(userId);
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Phones.jsp");
+
+			request.setAttribute("listPhones", phoneDAO.findAll(Long.parseLong(userId)));
+			request.getSession().setAttribute("choosedUser", user);
+			request.setAttribute("choosedUser", user);
+
+			dispatcher.forward(request, response);
+		} else if (acao != null && acao.equalsIgnoreCase("delete")) {
+			long phoneId = Long.parseLong(request.getParameter("phone"));
 			phoneDAO.delete(phoneId);
+			
+			request.setAttribute("msg", "Delete successfully completed");
+			
+			String userId = request.getParameter("user");
+			BeanLogin user = userDAO.findById(userId);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Phones.jsp");
+			request.setAttribute("listPhones", phoneDAO.findAll(Long.parseLong(userId)));
+			request.getSession().setAttribute("choosedUser", user);
+			request.setAttribute("choosedUser", user);
+			dispatcher.forward(request, response);
 		}
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/Phones.jsp");
-		request.getSession().setAttribute("choosedUser", user);
-		request.setAttribute("choosedUser", user);
-		request.setAttribute("listPhones", phoneDAO.findAll(idLong));
-		dispatcher.forward(request, response);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		String acao = request.getParameter("acao");
 
 		if (acao != null && acao.equalsIgnoreCase("reset")) {
@@ -59,20 +74,22 @@ public class PhoneServlet extends HttpServlet {
 			String number = request.getParameter("number");
 			String type = request.getParameter("type");
 			long id = user.getId();
-			
+
 			BeanPhone phone = new BeanPhone();
 			phone.setNumber(number);
 			phone.setType(type);
 			phone.setUser(id);
-			
+
 			phoneDAO.insert(phone);
+			request.setAttribute("msg", "registration completed succesfully");
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Phones.jsp");
 			request.getSession().setAttribute("choosedUser", user);
 			request.setAttribute("user", user);
+			
 			request.setAttribute("listPhones", phoneDAO.findAll(id));
 			dispatcher.forward(request, response);
 		}
 	}
-	
+
 }
