@@ -15,33 +15,28 @@
 
 	<h3>${msg}</h3>
 
-
 	<form action="PhoneServlet" method="post" id="form-phone-cadastro"
 		onsubmit="return validarCampos() ? true : false;">
 		<table>
 
 			<tr>
 				<td>User :</td>
-				<td><input type="text" name="user"  readonly="readonly"
+				<td><input type="text" name="user" readonly="readonly"
 					id="user" value="${choosedUser.id}"></td>
 			</tr>
-			
+
 			<tr>
 				<td>Número :</td>
 				<td><input type="text" name="number" id="number"></td>
 			</tr>
-			
+
 			<tr>
 				<td>Tipo :</td>
-				<td>
-				
-				<select name="type" id = "type">
-				<option>Casa</option>
-				<option>Contato</option>
-				<option>Celular</option>
-				</select>
-				
-				</td>
+				<td><select name="type" id="type">
+						<option>Casa</option>
+						<option>Contato</option>
+						<option>Celular</option>
+				</select></td>
 			</tr>
 
 			<tr>
@@ -49,26 +44,26 @@
 				<td><input type="submit" value="Cancelar"
 					onclick="document.getElementById('form-phone-cadastro').action = 'PhoneServlet?acao=reset'"></td>
 			</tr>
-
 		</table>
 	</form>
 
 	<table>
-
+		
 		<caption>Telefones Cadastrados</caption>
 
 		<tr>
 			<td>Id</td>
 			<td>Número</td>
 			<td>Tipo</td>
+			<td>Excluir</td>
 		</tr>
 
-		<c:forEach items="${telefones}" var="phone">
+		<c:forEach items="${listPhones}" var="phone">
 			<tr>
 				<td><c:out value="${phone.id}" /></td>
 				<td><c:out value="${phone.number}" /></td>
 				<td><c:out value="${phone.type}"></c:out></td>
-				<td><a href="salvarUsuario?acao=delete&user=${user.id}">Excluir</a></td>
+				<td><a href="PhoneServlet?acao=delete&phone=${phone.id}">Excluir</a></td>
 			</tr>
 		</c:forEach>
 	</table>

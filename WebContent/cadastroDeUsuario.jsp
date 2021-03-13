@@ -126,7 +126,7 @@
 				<td><c:out value="${user.ibge}"></c:out></td>
 				<td><a href="salvarUsuario?acao=delete&user=${user.id}">Excluir</a></td>
 				<td><a href="salvarUsuario?acao=edit&user=${user.id}">Editar</a></td>
-				<td><a href="PhoneServlet?&user=${user.id}"> <img title="Telefones" width = "30px" src="http://simpleicon.com/wp-content/uploads/phone-symbol-2.png"> </a></td>
+				<td><a href="PhoneServlet?user=${user.id}"> <img title="Telefones" width = "30px" src="http://simpleicon.com/wp-content/uploads/phone-symbol-2.png"> </a></td>
 			</tr>
 		</c:forEach>
 	</table>
