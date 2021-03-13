@@ -11,7 +11,6 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
 	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
 	crossorigin="anonymous"></script>
-
 </head>
 <body>
 	<a href="AcessoLiberado.jsp" title="voltar para o inicio">Inicio</a> |
@@ -39,7 +38,8 @@
 					value="${user.nome}"></td>
 
 				<td>Bairro :</td>
-				<td><input type="text" name="bairro" id="bairro" value="${user.bairro}"></td>
+				<td><input type="text" name="bairro" id="bairro"
+					value="${user.bairro}"></td>
 
 			</tr>
 
@@ -50,7 +50,8 @@
 					value="${user.login}"></td>
 
 				<td>Cidade :</td>
-				<td><input type="text" name="cidade" id="cidade" value="${user.cidade}"></td>
+				<td><input type="text" name="cidade" id="cidade"
+					value="${user.cidade}"></td>
 
 			</tr>
 
@@ -60,7 +61,8 @@
 					value="${user.senha}"></td>
 
 				<td>Estado :</td>
-				<td><input type="text" name="estado" id="estado" value="${user.estado}"></td>
+				<td><input type="text" name="estado" id="estado"
+					value="${user.estado}"></td>
 
 			</tr>
 
@@ -70,7 +72,8 @@
 					value="${user.fone}"></td>
 
 				<td>IBGE :</td>
-				<td><input type="text" name="ibge" id="ibge" value="${user.ibge}"></td>
+				<td><input type="text" name="ibge" id="ibge"
+					value="${user.ibge}"></td>
 
 			</tr>
 
@@ -154,7 +157,7 @@
 							$("#rua").val(dados.logradouro);
 							$("#bairro").val(dados.bairro);
 							$("#cidade").val(dados.localidade);
-							$("#estado").val(dados.estado);
+							$("#estado").val(dados.uf);
 							$("#ibge").val(dados.ibge);
 						} else {
 
@@ -162,7 +165,7 @@
 							$("#rua").val('');
 							$("#bairro").val('');
 							$("#cidade").val('');
-							$("#estado").val('');
+							$("#uf").val('');
 							$("#ibge").val('');
 
 							alert("CEP não encontrado.");
@@ -170,6 +173,5 @@
 					});
 		}
 	</script>
-
 </body>
 </html>

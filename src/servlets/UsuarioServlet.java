@@ -121,6 +121,7 @@ public class UsuarioServlet extends HttpServlet {
 
 			if (id == null || id.isEmpty() && podeInserir) {
 				userDAO.insert(user);
+				msg = "registration successfully completed";
 			} else if (id != null || !id.isEmpty() && podeInserir) {
 				userDAO.update(user);
 			}
@@ -130,6 +131,7 @@ public class UsuarioServlet extends HttpServlet {
 			}
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeUsuario.jsp");
+			request.setAttribute("msg", msg);
 			request.setAttribute("list", userDAO.findAll());
 			dispatcher.forward(request, response);
 		}
