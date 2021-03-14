@@ -19,7 +19,7 @@
 
 	<h3>${msg}</h3>
 	<form action="salvarUsuario" method="post" id="form-user-cadastro"
-		onsubmit="return validarCampos() ? true : false;">
+		onsubmit="return validarCampos() ? true : false;" enctype="multipart/form-data">
 		<table>
 
 			<tr>
@@ -28,14 +28,14 @@
 					value="${user.id}" placeholder="Gerado automaticamente"></td>
 
 				<td>Rua :</td>
-				<td><input type="text" name="rua" id="rua" value="${user.rua}" placeholder="Digite o nome da rua"></td>
-
+				<td><input type="text" name="rua" id="rua" value="${user.rua}"
+					placeholder="Digite o nome da rua"></td>
 			</tr>
 
 			<tr>
 				<td>Nome :</td>
 				<td><input type="text" name="nome" id="nome"
-					value="${user.nome}" placeholder="Digite o nome do usuário" ></td>
+					value="${user.nome}" placeholder="Digite o nome do usuário"></td>
 
 				<td>Bairro :</td>
 				<td><input type="text" name="bairro" id="bairro"
@@ -84,6 +84,12 @@
 			</tr>
 
 			<tr>
+				<td>Foto :</td>
+				<td><input type="file" name="photo" id="photo"></td>
+
+			</tr>
+
+			<tr>
 				<td><input type="submit" value="Salvar"></td>
 				<td><input type="submit" value="Cancelar"
 					onclick="document.getElementById('form-user-cadastro').action = 'salvarUsuario?acao=reset'"></td>
@@ -91,7 +97,7 @@
 
 		</table>
 	</form>
-
+	
 	<table>
 
 		<caption>Usuarios Cadastrados</caption>
@@ -126,7 +132,10 @@
 				<td><c:out value="${user.ibge}"></c:out></td>
 				<td><a href="salvarUsuario?acao=delete&user=${user.id}">Excluir</a></td>
 				<td><a href="salvarUsuario?acao=edit&user=${user.id}">Editar</a></td>
-				<td><a href="PhoneServlet?acao=list&user=${user.id}"> <img title="Telefones" width = "30px" src="http://simpleicon.com/wp-content/uploads/phone-symbol-2.png"> </a></td>
+				<td><a href="PhoneServlet?acao=list&user=${user.id}"> <img
+						title="Telefones" width="30px"
+						src="http://simpleicon.com/wp-content/uploads/phone-symbol-2.png">
+				</a></td>
 			</tr>
 		</c:forEach>
 	</table>

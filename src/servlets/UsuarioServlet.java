@@ -1,18 +1,26 @@
 package servlets;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 import beans.BeanLogin;
 import dao.UserDAO;
 
 @WebServlet("/salvarUsuario")
+@MultipartConfig
 public class UsuarioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -61,7 +69,7 @@ public class UsuarioServlet extends HttpServlet {
 			String senha = request.getParameter("senha");
 			String nome = request.getParameter("nome");
 			String fone = request.getParameter("fone");
-			
+
 			String cep = request.getParameter("cep");
 			String rua = request.getParameter("rua");
 			String bairro = request.getParameter("bairro");
@@ -75,7 +83,7 @@ public class UsuarioServlet extends HttpServlet {
 			user.setSenha(senha);
 			user.setNome(nome);
 			user.setFone(fone);
-			
+
 			user.setCep(cep);
 			user.setRua(rua);
 			user.setBairro(bairro);
@@ -85,24 +93,35 @@ public class UsuarioServlet extends HttpServlet {
 
 			String msg = null;
 			boolean podeInserir = true;
-			
-			/*Checks the fields validations */
+
+			/* Starting file upload */
+
+			if (ServletFileUpload.isMultipartContent(request)) { // checks if there is a upload file
+
+				Part imagePhoto = request.getPart("photo");
+				
+				new Base64();
+				String photoBase64 = Base64.encodeBase64String(StreamToByte(imagePhoto.getInputStream()));
+				
+				user.setPhotoBase64(photoBase64);
+				user.setContentType(imagePhoto.getContentType());
+				
+			}
+
+			/* Checks the fields validations */
 			if (login == null || login.isEmpty()) {
 				podeInserir = false;
 				msg = "Login cannot be empty";
-			} 
-			else if ( nome == null || nome.isEmpty()) {
+			} else if (nome == null || nome.isEmpty()) {
 				podeInserir = false;
 				msg = "Name cannot be empty";
 			} else if (senha == null || senha.isEmpty()) {
 				podeInserir = false;
 				msg = "Password cannot be empty";
-			}
-			else if (fone == null || fone.isEmpty()) {
+			} else if (fone == null || fone.isEmpty()) {
 				podeInserir = false;
 				msg = "Phone number cannot be empty";
-			}
-			else {
+			} else {
 				/* Checks the validation of occurrence in the database */
 				if (id == null || id.isEmpty() && !userDAO.validateLogin(login)) {
 					msg = "Login already exists";
@@ -114,7 +133,7 @@ public class UsuarioServlet extends HttpServlet {
 					podeInserir = false;
 				}
 			}
-			
+
 			if (msg != null) {
 				request.setAttribute("msg", msg);
 			}
@@ -136,5 +155,24 @@ public class UsuarioServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 
+	}
+
+	/* Converte a entrada de fluxo de dados da imagem para um array de byte */
+	private byte[] StreamToByte(InputStream image) {
+		try {
+
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			int reads = image.read();
+			
+			while (reads != -1) {
+				baos.write(reads);
+				reads = image.read();
+			}
+			
+			return baos.toByteArray();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

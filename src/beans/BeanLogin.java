@@ -13,6 +13,24 @@ public class BeanLogin {
 	private String cidade;
 	private String estado;
 	private String ibge;
+	private String photoBase64;
+	private String contentType;
+
+	public String getPhotoBase64() {
+		return photoBase64;
+	}
+
+	public void setPhotoBase64(String photoBase64) {
+		this.photoBase64 = photoBase64;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
 
 	public String getCep() {
 		return cep;
