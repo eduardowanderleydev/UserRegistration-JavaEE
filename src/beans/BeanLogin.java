@@ -15,7 +15,14 @@ public class BeanLogin {
 	private String ibge;
 	private String photoBase64;
 	private String contentType;
-
+	
+	private String tempPhotoUser;
+	
+	public String getTempPhotoUser() {
+		tempPhotoUser = "data:" + this.contentType + ";base64," + photoBase64;
+		return tempPhotoUser;
+	}
+	
 	public String getPhotoBase64() {
 		return photoBase64;
 	}

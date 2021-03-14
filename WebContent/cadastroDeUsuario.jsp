@@ -120,6 +120,7 @@
 
 		<c:forEach items="${list}" var="user">
 			<tr>
+				<td> <img src='<c:out value="${user.tempPhotoUser}"></c:out>' width="50px" alt="User Image" title="User Image"> </td>
 				<td><c:out value="${user.id}" /></td>
 				<td><c:out value="${user.login}" /></td>
 				<td><c:out value="${user.nome}"></c:out></td>

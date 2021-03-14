@@ -71,6 +71,8 @@ public class UserDAO {
 				user.setCidade(rs.getString("cidade"));
 				user.setEstado(rs.getString("estado"));
 				user.setIbge(rs.getString("ibge"));
+				user.setPhotoBase64(rs.getString("fotobase64"));
+				user.setContentType(rs.getString("tipoconteudo"));
 				list.add(user);
 			}
 
