@@ -119,6 +119,8 @@ public class UserDAO {
 				user.setCidade(rs.getString("cidade"));
 				user.setEstado(rs.getString("estado"));
 				user.setIbge(rs.getString("ibge"));
+				user.setPhotoBase64(rs.getString("fotobase64"));
+				user.setContentType(rs.getString("tipoconteudo"));
 				return user;
 			}
 		} catch (SQLException e) {
@@ -144,6 +146,8 @@ public class UserDAO {
 			ps.setString(8, user.getCidade());
 			ps.setString(9, user.getEstado());
 			ps.setString(10, user.getIbge());
+			ps.setString(11, user.getPhotoBase64());
+			ps.setString(12, user.getContentType());
 			ps.executeUpdate();
 			conn.commit();
 		} catch (SQLException e) {

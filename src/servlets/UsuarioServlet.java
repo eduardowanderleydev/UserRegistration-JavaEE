@@ -1,8 +1,10 @@
 package servlets;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -51,6 +53,28 @@ public class UsuarioServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeUsuario.jsp");
 			request.setAttribute("list", userDAO.findAll());
 			dispatcher.forward(request, response);
+		}else if (acao.equalsIgnoreCase("download")) {
+			BeanLogin userDownload = userDAO.findById(user);
+			if (userDownload != null) {
+				
+				response.setHeader("Content-Disposition", "attachment;filename=arquivo." + userDownload.getContentType().split("\\/")[1]);
+				new Base64();
+				/* Convertion image in base64 to []byte */
+				byte[] imagePhotoByte = Base64.decodeBase64(userDownload.getPhotoBase64());
+				/* Places bytes in an input object to process */
+				InputStream is = new ByteArrayInputStream(imagePhotoByte);
+				
+				/* Answer to Browse */
+				int read = 0;
+				byte[] bytes = new byte[1024];
+				OutputStream os = response.getOutputStream();
+				
+				while ((read = is.read(bytes)) != -1) {
+					os.write(bytes,0,read);
+				}
+				
+				os.flush();
+			}
 		}
 	}
 
