@@ -15,6 +15,8 @@ public class BeanLogin {
 	private String ibge;
 	private String photoBase64;
 	private String contentType;
+	private String curriculumBase64;
+	private String curriculumContentType;
 	
 	private String tempPhotoUser;
 	
@@ -22,7 +24,26 @@ public class BeanLogin {
 		tempPhotoUser = "data:" + this.contentType + ";base64," + photoBase64;
 		return tempPhotoUser;
 	}
+
 	
+	public String getCurriculumContentType() {
+		return curriculumContentType;
+	}
+
+	public void setCurriculumContentType(String curriculumContentType) {
+		this.curriculumContentType = curriculumContentType;
+	}
+
+
+	public String getCurriculumBase64() {
+		return curriculumBase64;
+	}
+
+
+	public void setCurriculumBase64(String curriculumBase64) {
+		this.curriculumBase64 = curriculumBase64;
+	}
+
 	public String getPhotoBase64() {
 		return photoBase64;
 	}

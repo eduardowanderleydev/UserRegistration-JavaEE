@@ -88,6 +88,12 @@
 				<td><input type="file" name="photo" id="photo"></td>
 
 			</tr>
+			
+			<tr>
+				<td>Curriculo :</td>
+				<td><input type="file" name="curriculum" id="curriculum"></td>
+
+			</tr>
 
 			<tr>
 				<td><input type="submit" value="Salvar"></td>
@@ -113,14 +119,15 @@
 			<td>Cidade</td>
 			<td>Estado</td>
 			<td>Ibge</td>
+			<td>Telefones</td>
+			<td>Curriculo</td>
 			<td>Excluir</td>
 			<td>Editar</td>
-			<td>Telefones</td>
 		</tr>
 
 		<c:forEach items="${list}" var="user">
 			<tr>
-				<td> <a href="salvarUsuario?acao=download&user=${user.id}"> <img src='<c:out value="${user.tempPhotoUser}"></c:out>' width="50px" alt="User Image" title="User Image"> </a> </td>
+				<td> <a href="salvarUsuario?acao=download&type=image&user=${user.id}"> <img src='<c:out value="${user.tempPhotoUser}"></c:out>' width="50px" alt="User Image" title="User Image"> </a> </td>
 				<td><c:out value="${user.id}" /></td>
 				<td><c:out value="${user.login}" /></td>
 				<td><c:out value="${user.nome}"></c:out></td>
@@ -130,12 +137,13 @@
 				<td><c:out value="${user.cidade}"></c:out></td>
 				<td><c:out value="${user.estado}"></c:out></td>
 				<td><c:out value="${user.ibge}"></c:out></td>
-				<td><a href="salvarUsuario?acao=delete&user=${user.id}">Excluir</a></td>
-				<td><a href="salvarUsuario?acao=edit&user=${user.id}">Editar</a></td>
 				<td><a href="PhoneServlet?acao=list&user=${user.id}"> <img
 						title="Telefones" width="30px"
 						src="http://simpleicon.com/wp-content/uploads/phone-symbol-2.png">
 				</a></td>
+				<td><a href="salvarUsuario?acao=download&type=curriculum&user=${user.id}">Curriculo </a></td>
+				<td><a href="salvarUsuario?acao=delete&user=${user.id}">Excluir</a></td>
+				<td><a href="salvarUsuario?acao=edit&user=${user.id}">Editar</a></td>
 			</tr>
 		</c:forEach>
 	</table>

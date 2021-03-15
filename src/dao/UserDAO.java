@@ -19,7 +19,7 @@ public class UserDAO {
 	}
 
 	public void insert(BeanLogin user) {
-		String sql = "insert into public.user (login,senha,nome,fone,cep,rua,bairro,cidade,estado,ibge,fotobase64, tipoconteudo) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into public.user (login,senha,nome,fone,cep,rua,bairro,cidade,estado,ibge,fotobase64, tipoconteudo,curriculobase64,tipoconteudo_curriculo) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement ps;
 
 		try {
@@ -36,6 +36,8 @@ public class UserDAO {
 			ps.setString(10, user.getIbge());
 			ps.setString(11, user.getPhotoBase64());
 			ps.setString(12, user.getContentType());
+			ps.setString(13, user.getCurriculumBase64());
+			ps.setString(14, user.getCurriculumContentType());
 			ps.execute();
 			conn.commit();
 		} catch (SQLException e) {
@@ -73,6 +75,8 @@ public class UserDAO {
 				user.setIbge(rs.getString("ibge"));
 				user.setPhotoBase64(rs.getString("fotobase64"));
 				user.setContentType(rs.getString("tipoconteudo"));
+				user.setCurriculumBase64(rs.getString("curriculobase64"));
+				user.setCurriculumContentType("tipoconteudo_curriculo");
 				list.add(user);
 			}
 
@@ -121,6 +125,8 @@ public class UserDAO {
 				user.setIbge(rs.getString("ibge"));
 				user.setPhotoBase64(rs.getString("fotobase64"));
 				user.setContentType(rs.getString("tipoconteudo"));
+				user.setCurriculumBase64(rs.getString("curriculobase64"));
+				user.setCurriculumContentType(rs.getString("tipoconteudo_curriculo"));
 				return user;
 			}
 		} catch (SQLException e) {
@@ -131,7 +137,8 @@ public class UserDAO {
 
 	public void update(BeanLogin user) {
 		String sql = "update public.user set login = ?, senha = ?, nome = ?, fone = ?, cep = ?, rua = ?, "
-				+ "bairro = ?, cidade = ?, estado = ?, ibge = ? where id = " + user.getId();
+				+ "bairro = ?, cidade = ?, estado = ?, ibge = ?, fotobase64 = ?, tipoconteudo = ?,"
+				+ " curriculobase64 = ?, tipoconteudo_curriculo = ? where id = " + user.getId();
 		PreparedStatement ps;
 
 		try {
@@ -148,6 +155,8 @@ public class UserDAO {
 			ps.setString(10, user.getIbge());
 			ps.setString(11, user.getPhotoBase64());
 			ps.setString(12, user.getContentType());
+			ps.setString(13, user.getCurriculumBase64());
+			ps.setString(14, user.getCurriculumContentType());
 			ps.executeUpdate();
 			conn.commit();
 		} catch (SQLException e) {

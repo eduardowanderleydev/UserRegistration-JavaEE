@@ -54,15 +54,31 @@ public class UsuarioServlet extends HttpServlet {
 			request.setAttribute("list", userDAO.findAll());
 			dispatcher.forward(request, response);
 		}else if (acao.equalsIgnoreCase("download")) {
+			
 			BeanLogin userDownload = userDAO.findById(user);
-			if (userDownload != null) {
+			
+			if (userDownload != null) { 	
 				
-				response.setHeader("Content-Disposition", "attachment;filename=arquivo." + userDownload.getContentType().split("\\/")[1]);
-				new Base64();
-				/* Convertion image in base64 to []byte */
-				byte[] imagePhotoByte = Base64.decodeBase64(userDownload.getPhotoBase64());
+				String contentType = "";
+				byte[] fileBytes = null;
+				String type = request.getParameter("type");
+				
+				if (type.equalsIgnoreCase("image")) {
+					contentType = userDownload.getContentType();
+					new Base64();
+					fileBytes = Base64.decodeBase64(userDownload.getPhotoBase64());
+				} else if (type.equalsIgnoreCase("curriculum")) {
+					contentType = userDownload.getCurriculumContentType();
+					new Base64();
+					fileBytes = Base64.decodeBase64(userDownload.getCurriculumBase64());
+				}
+				
+				String TypeFile = contentType.split("/")[1];
+				// change the header passing the request for download
+				response.setHeader("Content-Disposition", "attachment;filename=arquivo." + TypeFile);
+				
 				/* Places bytes in an input object to process */
-				InputStream is = new ByteArrayInputStream(imagePhotoByte);
+				InputStream is = new ByteArrayInputStream(fileBytes);
 				
 				/* Answer to Browse */
 				int read = 0;
@@ -74,6 +90,7 @@ public class UsuarioServlet extends HttpServlet {
 				}
 				
 				os.flush();
+				os.close();
 			}
 		}
 	}
@@ -122,13 +139,28 @@ public class UsuarioServlet extends HttpServlet {
 
 			if (ServletFileUpload.isMultipartContent(request)) { // checks if there is a upload file
 
-				Part imagePhoto = request.getPart("photo");
+				Part imagePhoto = request.getPart("photo"); // get the object received from a multipart/form-data
 				
 				new Base64();
-				String photoBase64 = Base64.encodeBase64String(StreamToByte(imagePhoto.getInputStream()));
+				String photoBase64 = Base64.encodeBase64String(StreamToByte(imagePhoto.getInputStream())); // change the image to base64
 				
+				//set the attributes in the user
 				user.setPhotoBase64(photoBase64);
 				user.setContentType(imagePhoto.getContentType());
+				
+				/* Proccess pdf */
+				
+				Part curriculumPdf = request.getPart("curriculum");
+				
+				if (curriculumPdf != null) {
+					new Base64();
+					String curriculumBase64 = Base64.encodeBase64String(StreamToByte(curriculumPdf.getInputStream())); // change the image to base64
+					
+					//set the attributes in the user
+					user.setCurriculumContentType(curriculumPdf.getContentType());
+					user.setCurriculumBase64(curriculumBase64);
+				}
+				
 				
 			}
 
@@ -181,7 +213,7 @@ public class UsuarioServlet extends HttpServlet {
 
 	}
 
-	/* Converte a entrada de fluxo de dados da imagem para um array de byte */
+	/* Change the flow input data from image to a byte array */
 	private byte[] StreamToByte(InputStream image) {
 		try {
 
