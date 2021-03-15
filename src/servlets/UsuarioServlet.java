@@ -53,16 +53,16 @@ public class UsuarioServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeUsuario.jsp");
 			request.setAttribute("list", userDAO.findAll());
 			dispatcher.forward(request, response);
-		}else if (acao.equalsIgnoreCase("download")) {
-			
+		} else if (acao.equalsIgnoreCase("download")) {
+
 			BeanLogin userDownload = userDAO.findById(user);
-			
-			if (userDownload != null) { 	
-				
+
+			if (userDownload != null) {
+
 				String contentType = "";
 				byte[] fileBytes = null;
 				String type = request.getParameter("type");
-				
+
 				if (type.equalsIgnoreCase("image")) {
 					contentType = userDownload.getContentType();
 					new Base64();
@@ -72,23 +72,23 @@ public class UsuarioServlet extends HttpServlet {
 					new Base64();
 					fileBytes = Base64.decodeBase64(userDownload.getCurriculumBase64());
 				}
-				
+
 				String TypeFile = contentType.split("/")[1];
 				// change the header passing the request for download
 				response.setHeader("Content-Disposition", "attachment;filename=arquivo." + TypeFile);
-				
+
 				/* Places bytes in an input object to process */
 				InputStream is = new ByteArrayInputStream(fileBytes);
-				
+
 				/* Answer to Browse */
 				int read = 0;
 				byte[] bytes = new byte[1024];
 				OutputStream os = response.getOutputStream();
-				
+
 				while ((read = is.read(bytes)) != -1) {
-					os.write(bytes,0,read);
+					os.write(bytes, 0, read);
 				}
-				
+
 				os.flush();
 				os.close();
 			}
@@ -140,28 +140,35 @@ public class UsuarioServlet extends HttpServlet {
 			if (ServletFileUpload.isMultipartContent(request)) { // checks if there is a upload file
 
 				Part imagePhoto = request.getPart("photo"); // get the object received from a multipart/form-data
-				
-				new Base64();
-				String photoBase64 = Base64.encodeBase64String(StreamToByte(imagePhoto.getInputStream())); // change the image to base64
-				
-				//set the attributes in the user
-				user.setPhotoBase64(photoBase64);
-				user.setContentType(imagePhoto.getContentType());
-				
-				/* Proccess pdf */
-				
-				Part curriculumPdf = request.getPart("curriculum");
-				
-				if (curriculumPdf != null) {
+
+				if (imagePhoto != null && imagePhoto.getInputStream().available() > 0) {
 					new Base64();
-					String curriculumBase64 = Base64.encodeBase64String(StreamToByte(curriculumPdf.getInputStream())); // change the image to base64
-					
-					//set the attributes in the user
+					String photoBase64 = Base64.encodeBase64String(StreamToByte(imagePhoto.getInputStream())); // change
+																												// the
+					// set the attributes in the user
+					user.setPhotoBase64(photoBase64);
+					user.setContentType(imagePhoto.getContentType());
+				} else {
+					user.setPhotoBase64(request.getParameter("photoTemp"));
+					user.setContentType(request.getParameter("photoContentTypeTemp"));
+				}
+
+				/* Proccess pdf */
+
+				Part curriculumPdf = request.getPart("curriculum");
+
+				if (curriculumPdf != null && curriculumPdf.getInputStream().available() > 0) {
+					new Base64();
+					String curriculumBase64 = Base64.encodeBase64String(StreamToByte(curriculumPdf.getInputStream())); // change
+																														// the
+					// set the attributes in the user
 					user.setCurriculumContentType(curriculumPdf.getContentType());
 					user.setCurriculumBase64(curriculumBase64);
+				} else {
+					user.setCurriculumBase64(request.getParameter("curriculumTemp"));
+					user.setCurriculumContentType(request.getParameter("contentTypeCurriculumTemp"));
 				}
-				
-				
+
 			}
 
 			/* Checks the fields validations */
@@ -219,12 +226,12 @@ public class UsuarioServlet extends HttpServlet {
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			int reads = image.read();
-			
+
 			while (reads != -1) {
 				baos.write(reads);
 				reads = image.read();
 			}
-			
+
 			return baos.toByteArray();
 		} catch (IOException e) {
 			e.printStackTrace();

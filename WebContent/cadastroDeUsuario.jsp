@@ -19,7 +19,8 @@
 
 	<h3>${msg}</h3>
 	<form action="salvarUsuario" method="post" id="form-user-cadastro"
-		onsubmit="return validarCampos() ? true : false;" enctype="multipart/form-data">
+		onsubmit="return validarCampos() ? true : false;"
+		enctype="multipart/form-data">
 		<table>
 
 			<tr>
@@ -85,13 +86,25 @@
 
 			<tr>
 				<td>Foto :</td>
-				<td><input type="file" name="photo" id="photo"></td>
-
+				<td>
+				<input type="file" name="photo" id="photo"> 
+				<input
+					type="text" readonly="readonly" style="display: none;"
+					name="photoTemp" value="${user.photoBase64}">
+				<input type="text" readonly="readonly" style="display: none;"
+					name="contentTypePhotoTemp" value="${user.contentType}">
+				</td>
 			</tr>
-			
+
 			<tr>
 				<td>Curriculo :</td>
-				<td><input type="file" name="curriculum" id="curriculum"></td>
+				<td><input type="file" name="curriculum" id="curriculum">
+				<input
+					type="text" readonly="readonly" style="display: none;"
+					name="curriculumTemp" value="${user.curriculumBase64}">
+				<input type="text" readonly="readonly" style="display: none;"
+					name="contentTypeCurriculumTemp" value="${user.curriculumContentType}">
+				</td>
 
 			</tr>
 
@@ -103,7 +116,7 @@
 
 		</table>
 	</form>
-	
+
 	<table>
 
 		<caption>Usuarios Cadastrados</caption>
@@ -127,7 +140,11 @@
 
 		<c:forEach items="${list}" var="user">
 			<tr>
-				<td> <a href="salvarUsuario?acao=download&type=image&user=${user.id}"> <img src='<c:out value="${user.tempPhotoUser}"></c:out>' width="50px" alt="User Image" title="User Image"> </a> </td>
+				<td><a
+					href="salvarUsuario?acao=download&type=image&user=${user.id}">
+						<img src='<c:out value="${user.tempPhotoUser}"></c:out>'
+						width="50px" alt="User Image" title="User Image">
+				</a></td>
 				<td><c:out value="${user.id}" /></td>
 				<td><c:out value="${user.login}" /></td>
 				<td><c:out value="${user.nome}"></c:out></td>
@@ -141,7 +158,9 @@
 						title="Telefones" width="30px"
 						src="http://simpleicon.com/wp-content/uploads/phone-symbol-2.png">
 				</a></td>
-				<td><a href="salvarUsuario?acao=download&type=curriculum&user=${user.id}">Curriculo </a></td>
+				<td><a
+					href="salvarUsuario?acao=download&type=curriculum&user=${user.id}">Curriculo
+				</a></td>
 				<td><a href="salvarUsuario?acao=delete&user=${user.id}">Excluir</a></td>
 				<td><a href="salvarUsuario?acao=edit&user=${user.id}">Editar</a></td>
 			</tr>
