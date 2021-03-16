@@ -86,25 +86,21 @@
 
 			<tr>
 				<td>Foto :</td>
-				<td>
-				<input type="file" name="photo" id="photo"> 
-				<input
+				<td><input type="file" name="photo" id="photo"> <input
 					type="text" readonly="readonly" style="display: none;"
-					name="photoTemp" value="${user.photoBase64}">
-				<input type="text" readonly="readonly" style="display: none;"
-					name="contentTypePhotoTemp" value="${user.contentType}">
-				</td>
+					name="photoTemp" value="${user.photoBase64}"> <input
+					type="text" readonly="readonly" style="display: none;"
+					name="contentTypePhotoTemp" value="${user.contentType}"></td>
 			</tr>
 
 			<tr>
 				<td>Curriculo :</td>
 				<td><input type="file" name="curriculum" id="curriculum">
-				<input
+					<input type="text" readonly="readonly" style="display: none;"
+					name="curriculumTemp" value="${user.curriculumBase64}"> <input
 					type="text" readonly="readonly" style="display: none;"
-					name="curriculumTemp" value="${user.curriculumBase64}">
-				<input type="text" readonly="readonly" style="display: none;"
-					name="contentTypeCurriculumTemp" value="${user.curriculumContentType}">
-				</td>
+					name="contentTypeCurriculumTemp"
+					value="${user.curriculumContentType}"></td>
 
 			</tr>
 
@@ -140,11 +136,20 @@
 
 		<c:forEach items="${list}" var="user">
 			<tr>
-				<td><a
-					href="salvarUsuario?acao=download&type=image&user=${user.id}">
-						<img src='<c:out value="${user.tempPhotoUser}"></c:out>'
-						width="50px" alt="User Image" title="User Image">
-				</a></td>
+
+				<c:if test="${user.photoBase64.isEmpty() == false}">
+					<td><a
+						href="salvarUsuario?acao=download&type=image&user=${user.id}">
+							<img src='<c:out value="${user.tempPhotoUser}"></c:out>'
+							width="50px" alt="User Image" title="User Image">
+					</a></td>
+				</c:if>
+				<c:if test="${user.photoBase64.isEmpty() == true}">
+					<td><img alt="Imagem User" width="50px"
+						src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" onclick="alert('user does not have a registered profile photo')" >
+					</td>
+				</c:if>
+
 				<td><c:out value="${user.id}" /></td>
 				<td><c:out value="${user.login}" /></td>
 				<td><c:out value="${user.nome}"></c:out></td>
@@ -158,9 +163,19 @@
 						title="Telefones" width="30px"
 						src="http://simpleicon.com/wp-content/uploads/phone-symbol-2.png">
 				</a></td>
-				<td><a
-					href="salvarUsuario?acao=download&type=curriculum&user=${user.id}">Curriculo
-				</a></td>
+
+				<c:if test="${user.curriculumBase64.isEmpty() == false}">
+					<td><a
+						href="salvarUsuario?acao=download&type=curriculum&user=${user.id}">
+							<img alt="Curriculo" width="40px"
+							src="https://www.ufpb.br/propesq/contents/imagens/pdf-icon.png/@@images/image.png">
+					</a></td>
+				</c:if>
+				<c:if test="${user.curriculumBase64.isEmpty() == true}">
+					<td><img alt="Curriculo" width="40px"
+						src="https://www.ufpb.br/propesq/contents/imagens/pdf-icon.png/@@images/image.png" onclick="alert('user does not have a registered curriculum')">
+					</td>
+				</c:if>
 				<td><a href="salvarUsuario?acao=delete&user=${user.id}">Excluir</a></td>
 				<td><a href="salvarUsuario?acao=edit&user=${user.id}">Editar</a></td>
 			</tr>
