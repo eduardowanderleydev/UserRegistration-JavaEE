@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Cadastro de Produtos</title>
+<script src="resources/javascript/jquery.min.js" type="text/javascript"></script>
+<script src="resources/javascript/jquery.maskMoney.min.js"
+	type="text/javascript"></script>
 </head>
 <body>
 	<a href="AcessoLiberado.jsp" title="voltar para o inicio">Inicio</a> |
@@ -24,20 +28,21 @@
 
 			<tr>
 				<td>Nome :</td>
-				<td><input type="text" name="name" id="name"
-					value="${product.name}"></td>
+				<td><input type=text name="name" id="name"
+					value="${product.name}" maxlength="25" required="required"></td>
 			</tr>
 
 			<tr>
 				<td>Quantidade :</td>
-				<td><input type="text" name="quantity" id="quantity"
-					value="${product.quantity}"></td>
+				<td><input type="number" name="quantity" id="quantity"
+					value="${product.quantity}" maxlength="10" required="required"></td>
 			</tr>
 
 			<tr>
 				<td>Preço :</td>
-				<td><input type="text" name="price" id="price"
-					value="${product.price}"></td>
+				<td><input type="text" name="price" id="price" data-precision = "2"
+					data-thousands="." data-decimal = "," value="${product.textPrice}"
+					maxlength="10"></td>
 			</tr>
 
 			<tr>
@@ -65,7 +70,7 @@
 				<td><c:out value="${product.id}" /></td>
 				<td><c:out value="${product.name}" /></td>
 				<td><c:out value="${product.quantity}" /></td>
-				<td><c:out value="${product.price}" /></td>
+				<td> <fmt:formatNumber type="number" maxFractionDigits="2" value = "${product.price}"></fmt:formatNumber></td>
 				<td><a href="ProductServlet?acao=delete&product=${product.id}">Delete</a>
 				</td>
 				<td><a href="ProductServlet?acao=edit&product=${product.id}">Edit</a>
@@ -75,22 +80,10 @@
 		</c:forEach>
 	</table>
 
-	<script type="text/javascript">
-		function validarCampos() {
-			if (document.getElementById('name').value == '') {
-				alert("Name cannot be empty");
-				return false;
-			}
-			if (document.getElementById('quantity').value == '') {
-				alert("Quantity cannot be empty");
-				return false;
-			}
-			if (document.getElementById('price').value == '') {
-				alert("Price cannot be empty");
-				return false;
-			}
-			return true;
-		}
+	<script>
+		$(function() {
+			$('#price').maskMoney();
+		})
 	</script>
 
 </body>

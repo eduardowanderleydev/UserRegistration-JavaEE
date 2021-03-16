@@ -68,16 +68,13 @@
 			</tr>
 
 			<tr>
-				<td>IBGE :</td>
-				<td><input type="text" name="ibge" id="ibge"
-					value="${user.ibge}" placeholder="Digite o número do IBGE"></td>
-
-			</tr>
-
-			<tr>
 				<td>Cep :</td>
 				<td><input type="text" name="cep" id="cep" value="${user.cep}"
 					onblur="consultarCep()" placeholder="Digite o CEP"></td>
+
+				<td>IBGE :</td>
+				<td><input type="text" name="ibge" id="ibge"
+					value="${user.ibge}" placeholder="Digite o número do IBGE"></td>
 			</tr>
 
 			<tr>
@@ -142,7 +139,8 @@
 				</c:if>
 				<c:if test="${user.photoBase64.isEmpty() == true}">
 					<td><img alt="Imagem User" width="50px"
-						src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png" onclick="alert('user does not have a registered profile photo')" >
+						src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png"
+						onclick="alert('user does not have a registered profile photo')">
 					</td>
 				</c:if>
 
@@ -169,7 +167,8 @@
 				</c:if>
 				<c:if test="${user.curriculumBase64.isEmpty() == true}">
 					<td><img alt="Curriculo" width="40px"
-						src="https://www.ufpb.br/propesq/contents/imagens/pdf-icon.png/@@images/image.png" onclick="alert('user does not have a registered curriculum')">
+						src="https://www.ufpb.br/propesq/contents/imagens/pdf-icon.png/@@images/image.png"
+						onclick="alert('user does not have a registered curriculum')">
 					</td>
 				</c:if>
 				<td><a href="salvarUsuario?acao=delete&user=${user.id}">Excluir</a></td>

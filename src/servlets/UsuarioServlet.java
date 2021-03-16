@@ -38,22 +38,22 @@ public class UsuarioServlet extends HttpServlet {
 		String acao = request.getParameter("acao");
 		String user = request.getParameter("user");
 
-		if (acao.equals("delete")) {
+		if (acao != null && acao.equals("delete")) {
 			userDAO.delete(user);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeUsuario.jsp");
 			request.setAttribute("list", userDAO.findAll());
 			dispatcher.forward(request, response);
-		} else if (acao.equals("edit")) {
+		} else if (acao != null && acao.equals("edit")) {
 			BeanLogin userEdit = userDAO.findById(user);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeUsuario.jsp");
 			request.setAttribute("user", userEdit);
 			request.setAttribute("list", userDAO.findAll());
 			dispatcher.forward(request, response);
-		} else if (acao.equalsIgnoreCase("listartodos")) {
+		} else if (acao != null && acao.equalsIgnoreCase("listartodos")) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeUsuario.jsp");
 			request.setAttribute("list", userDAO.findAll());
 			dispatcher.forward(request, response);
-		} else if (acao.equalsIgnoreCase("download")) {
+		} else if (acao != null && acao.equalsIgnoreCase("download")) {
 
 			BeanLogin userDownload = userDAO.findById(user);
 
@@ -148,6 +148,7 @@ public class UsuarioServlet extends HttpServlet {
 					// set the attributes in the user
 					user.setPhotoBase64(photoBase64);
 					user.setContentType(imagePhoto.getContentType());
+					
 				} else {
 					user.setPhotoBase64(request.getParameter("photoTemp"));
 					user.setContentType(request.getParameter("photoContentTypeTemp"));

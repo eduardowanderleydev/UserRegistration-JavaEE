@@ -53,41 +53,61 @@ public class ProductServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
 			request.setAttribute("list", productDAO.findAll());
 			dispatcher.forward(request, response);
+		} else {
+
+			String id = request.getParameter("id");
+			String name = request.getParameter("name");
+			String quantity = request.getParameter("quantity");
+			String price = request.getParameter("price");
+
+			boolean podeInserir = true;
+			String msg = "";
+
+			if (name == null || name.isEmpty()) {
+				msg = "Name cannot be empty";
+				podeInserir = false;
+			} else if (quantity == null || quantity.isEmpty()) {
+				msg = "Quantity cannot be empty";
+				podeInserir = false;
+			} else if (price == null || price.isEmpty()) {
+				msg = "Price cannot be empty";
+				podeInserir = false;
+			}
+
+			if (id == null || id.isEmpty() && !productDAO.validateProductName(name)) {
+				podeInserir = false;
+				msg = "Product name already exists";
+			}
+
+			BeanProduct product = new BeanProduct();
+			product.setName(name);
+			product.setId(!id.isEmpty() ? Long.parseLong(id) : 0);
+			
+			if (quantity != null && !quantity .isEmpty()) {
+				product.setQuantity(Integer.parseInt(quantity));
+			}
+			
+			if (price != null && !price.isEmpty()) {
+				String valueParse = price.replaceAll("\\.", "" );
+				valueParse = valueParse.replaceAll("\\,", "\\.");
+				product.setPrice(Double.parseDouble(valueParse));
+			}
+			
+
+			if (id == null || id.isEmpty() && podeInserir && productDAO.validateProductName(name)) {
+				productDAO.insert(product);
+			} else if (id != null || !id.isEmpty() && podeInserir) {
+				productDAO.update(product);
+			}
+
+			if (!podeInserir) {
+				request.setAttribute("product", product);
+			}
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
+			request.setAttribute("list", productDAO.findAll());
+			request.setAttribute("msg", msg);
+			dispatcher.forward(request, response);
 		}
-
-		String id = request.getParameter("id");
-		String name = request.getParameter("name");
-		String quantity = request.getParameter("quantity");
-		String price = request.getParameter("price");
-
-		BeanProduct product = new BeanProduct();
-		product.setId(!id.isEmpty() ? Long.parseLong(id) : 0);
-		product.setName(name);
-		product.setPrice(Double.parseDouble(price));
-		product.setQuantity(Integer.parseInt(quantity));
-
-		boolean podeInserir = true;
-		String msg = "";
-
-		if (!productDAO.validateProductName(name)) {
-			podeInserir = false;
-			msg = "Product name already exists";
-		}
-
-		if (id == null || id.isEmpty() && podeInserir) {
-			productDAO.insert(product);
-		} else if (id != null || !id.isEmpty() && podeInserir) {
-			productDAO.update(product);
-		}
-		
-		if (!podeInserir) {
-			request.setAttribute("product", product);
-		}
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
-		request.setAttribute("list", productDAO.findAll());
-		request.setAttribute("msg", msg);
-		dispatcher.forward(request, response);
 	}
-
 }

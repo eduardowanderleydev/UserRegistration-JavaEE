@@ -41,4 +41,9 @@ public class BeanProduct {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+	public String getTextPrice() {
+		return Double.toString(price).replace('.', ',');
+	}
+	
 }
