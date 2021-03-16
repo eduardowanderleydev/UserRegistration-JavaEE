@@ -130,14 +130,14 @@
 		<c:forEach items="${list}" var="user">
 			<tr>
 
-				<c:if test="${user.photoBase64.isEmpty() == false}">
+				<c:if test="${user.photoBase64Miniature.isEmpty() == false}">
 					<td><a
 						href="salvarUsuario?acao=download&type=image&user=${user.id}">
-							<img src='<c:out value="${user.tempPhotoUser}"></c:out>'
+							<img src='<c:out value="${user.photoBase64Miniature}"></c:out>'
 							width="50px" alt="User Image" title="User Image">
 					</a></td>
 				</c:if>
-				<c:if test="${user.photoBase64.isEmpty() == true}">
+				<c:if test="${user.photoBase64Miniature.isEmpty() == true}">
 					<td><img alt="Imagem User" width="50px"
 						src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png"
 						onclick="alert('user does not have a registered profile photo')">

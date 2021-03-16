@@ -14,12 +14,22 @@ public class BeanLogin {
 	private String estado;
 	private String ibge;
 	private String photoBase64;
+	private String photoBase64Miniature;
 	private String contentType;
 	private String curriculumBase64;
 	private String curriculumContentType;
-	
 	private String tempPhotoUser;
 	
+	public String getPhotoBase64Miniature() {
+		return photoBase64Miniature;
+	}
+
+
+	public void setPhotoBase64Miniature(String photoBase64Miniature) {
+		this.photoBase64Miniature = photoBase64Miniature;
+	}
+
+
 	public String getTempPhotoUser() {
 		tempPhotoUser = "data:" + this.contentType + ";base64," + photoBase64;
 		return tempPhotoUser;

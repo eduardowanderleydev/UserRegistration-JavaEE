@@ -19,7 +19,7 @@ public class UserDAO {
 	}
 
 	public void insert(BeanLogin user) {
-		String sql = "insert into public.user (login,senha,nome,fone,cep,rua,bairro,cidade,estado,ibge,fotobase64, tipoconteudo,curriculobase64,tipoconteudo_curriculo) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into public.user (login,senha,nome,fone,cep,rua,bairro,cidade,estado,ibge,fotobase64, tipoconteudo,curriculobase64,tipoconteudo_curriculo,fotominiaturabase64) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement ps;
 
 		try {
@@ -38,6 +38,7 @@ public class UserDAO {
 			ps.setString(12, user.getContentType());
 			ps.setString(13, user.getCurriculumBase64());
 			ps.setString(14, user.getCurriculumContentType());
+			ps.setString(15, user.getPhotoBase64Miniature());
 			ps.execute();
 			conn.commit();
 		} catch (SQLException e) {
@@ -73,10 +74,11 @@ public class UserDAO {
 				user.setCidade(rs.getString("cidade"));
 				user.setEstado(rs.getString("estado"));
 				user.setIbge(rs.getString("ibge"));
-				user.setPhotoBase64(rs.getString("fotobase64"));
+				//user.setPhotoBase64(rs.getString("fotobase64"));
 				user.setContentType(rs.getString("tipoconteudo"));
 				user.setCurriculumBase64(rs.getString("curriculobase64"));
-				user.setCurriculumContentType("tipoconteudo_curriculo");
+				user.setCurriculumContentType(rs.getString("tipoconteudo_curriculo"));
+				user.setPhotoBase64Miniature(rs.getString("fotominiaturabase64"));
 				list.add(user);
 			}
 
@@ -127,6 +129,7 @@ public class UserDAO {
 				user.setContentType(rs.getString("tipoconteudo"));
 				user.setCurriculumBase64(rs.getString("curriculobase64"));
 				user.setCurriculumContentType(rs.getString("tipoconteudo_curriculo"));
+				user.setPhotoBase64Miniature(rs.getString("fotominiaturabase64"));
 				return user;
 			}
 		} catch (SQLException e) {
@@ -138,7 +141,7 @@ public class UserDAO {
 	public void update(BeanLogin user) {
 		String sql = "update public.user set login = ?, senha = ?, nome = ?, fone = ?, cep = ?, rua = ?, "
 				+ "bairro = ?, cidade = ?, estado = ?, ibge = ?, fotobase64 = ?, tipoconteudo = ?,"
-				+ " curriculobase64 = ?, tipoconteudo_curriculo = ? where id = " + user.getId();
+				+ " curriculobase64 = ?, tipoconteudo_curriculo = ?, fotominiaturabase64 = ?  where id = " + user.getId();
 		PreparedStatement ps;
 
 		try {
@@ -157,6 +160,7 @@ public class UserDAO {
 			ps.setString(12, user.getContentType());
 			ps.setString(13, user.getCurriculumBase64());
 			ps.setString(14, user.getCurriculumContentType());
+			ps.setString(15, user.getPhotoBase64Miniature());
 			ps.executeUpdate();
 			conn.commit();
 		} catch (SQLException e) {

@@ -1,11 +1,14 @@
 package servlets;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -14,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import javax.xml.bind.DatatypeConverter;
+import javax.xml.bind.DatatypeConverterInterface;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -142,12 +147,36 @@ public class UsuarioServlet extends HttpServlet {
 				Part imagePhoto = request.getPart("photo"); // get the object received from a multipart/form-data
 
 				if (imagePhoto != null && imagePhoto.getInputStream().available() > 0) {
+					
+					byte [] image = StreamToByte(imagePhoto.getInputStream());
+					
 					new Base64();
-					String photoBase64 = Base64.encodeBase64String(StreamToByte(imagePhoto.getInputStream())); // change
+					String photoBase64 = Base64.encodeBase64String(image); // change
 																												// the
 					// set the attributes in the user
 					user.setPhotoBase64(photoBase64);
 					user.setContentType(imagePhoto.getContentType());
+					
+					/* change image to miniature */
+					
+					new Base64();
+					byte[] imageByteDecode = Base64.decodeBase64(photoBase64);
+					
+					BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imageByteDecode));
+					
+					int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB: bufferedImage.getType();
+					
+					BufferedImage resizedImage = new BufferedImage(100, 100, type);
+					Graphics2D graphic = resizedImage.createGraphics();
+					graphic.drawImage(bufferedImage, 0, 0, 100, 100, null);
+					graphic.dispose();
+					
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					ImageIO.write(resizedImage, "png", baos);
+					
+					String miniatureBase64 = "data:image/png;base64," + DatatypeConverter.printBase64Binary(baos.toByteArray());
+					
+					user.setPhotoBase64Miniature(miniatureBase64);
 					
 				} else {
 					user.setPhotoBase64(request.getParameter("photoTemp"));
