@@ -68,10 +68,6 @@
 			</tr>
 
 			<tr>
-				<td>Telefone :</td>
-				<td><input type="text" name="fone" id="fone"
-					value="${user.fone}" placeholder="Digite o número de telefone"></td>
-
 				<td>IBGE :</td>
 				<td><input type="text" name="ibge" id="ibge"
 					value="${user.ibge}" placeholder="Digite o número do IBGE"></td>
@@ -192,9 +188,6 @@
 				return false;
 			} else if (document.getElementById("senha").value == '') {
 				alert("Password cannot be empty");
-				return false;
-			} else if (document.getElementById("fone").value == '') {
-				alert("Phone cannot be empty");
 				return false;
 			}
 			return true;

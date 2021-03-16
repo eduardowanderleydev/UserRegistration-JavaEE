@@ -181,9 +181,6 @@ public class UsuarioServlet extends HttpServlet {
 			} else if (senha == null || senha.isEmpty()) {
 				podeInserir = false;
 				msg = "Password cannot be empty";
-			} else if (fone == null || fone.isEmpty()) {
-				podeInserir = false;
-				msg = "Phone number cannot be empty";
 			} else {
 				/* Checks the validation of occurrence in the database */
 				if (id == null || id.isEmpty() && !userDAO.validateLogin(login)) {

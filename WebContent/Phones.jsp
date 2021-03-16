@@ -15,8 +15,7 @@
 
 	<h3>${msg}</h3>
 
-	<form action="PhoneServlet" method="post" id="form-phone-cadastro"
-		onsubmit="return validarCampos() ? true : false;">
+	<form action="PhoneServlet" method="post" id="form-phone-cadastro">
 		<table>
 
 			<tr>
@@ -42,13 +41,13 @@
 			<tr>
 				<td><input type="submit" value="Salvar"></td>
 				<td><input type="submit" value="Cancelar"
-					onclick="document.getElementById('form-phone-cadastro').action = 'PhoneServlet?acao=reset'"></td>
+					onclick="document.getElementById('form-phone-cadastro').action = 'PhoneServlet?acao=back'"></td>
 			</tr>
 		</table>
 	</form>
 
 	<table>
-		
+
 		<caption>Telefones Cadastrados</caption>
 
 		<tr>
@@ -63,22 +62,10 @@
 				<td><c:out value="${phone.id}" /></td>
 				<td><c:out value="${phone.number}" /></td>
 				<td><c:out value="${phone.type}"></c:out></td>
-				<td><a href="PhoneServlet?acao=delete&phone=${phone.id}&user=${choosedUser.id}">Excluir</a></td>
+				<td><a
+					href="PhoneServlet?acao=delete&phone=${phone.id}&user=${choosedUser.id}">Excluir</a></td>
 			</tr>
 		</c:forEach>
 	</table>
-
-	<script type="text/javascript">
-		function validarCampos() {
-			if (document.getElementById("number").value == '') {
-				alert("Number cannot be empty");
-				return false;
-			} else if (document.getElementById("type").value == '') {
-				alert("Type cannot be empty");
-				return false;
-			}
-			return true;
-		}
-	</script>
 </body>
 </html>

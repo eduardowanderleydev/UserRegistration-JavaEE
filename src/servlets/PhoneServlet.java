@@ -45,12 +45,12 @@ public class PhoneServlet extends HttpServlet {
 		} else if (acao != null && acao.equalsIgnoreCase("delete")) {
 			long phoneId = Long.parseLong(request.getParameter("phone"));
 			phoneDAO.delete(phoneId);
-			
+
 			request.setAttribute("msg", "Delete successfully completed");
-			
+
 			String userId = request.getParameter("user");
 			BeanLogin user = userDAO.findById(userId);
-			
+
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Phones.jsp");
 			request.setAttribute("listPhones", phoneDAO.findAll(Long.parseLong(userId)));
 			request.getSession().setAttribute("choosedUser", user);
@@ -65,7 +65,7 @@ public class PhoneServlet extends HttpServlet {
 
 		String acao = request.getParameter("acao");
 
-		if (acao != null && acao.equalsIgnoreCase("reset")) {
+		if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("back")) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeUsuario.jsp");
 			request.setAttribute("list", userDAO.findAll());
 			dispatcher.forward(request, response);
@@ -75,21 +75,28 @@ public class PhoneServlet extends HttpServlet {
 			String type = request.getParameter("type");
 			long id = user.getId();
 
-			BeanPhone phone = new BeanPhone();
-			phone.setNumber(number);
-			phone.setType(type);
-			phone.setUser(id);
+			if (number == null || number.isEmpty() || type == null || type.isEmpty()) {
+				RequestDispatcher ReqDispatcher = request.getRequestDispatcher("/Phones.jsp");
+				request.getSession().setAttribute("choosedUser", user);
+				request.setAttribute("user", user);
+				ReqDispatcher.forward(request, response);
+			} else {
+				BeanPhone phone = new BeanPhone();
+				phone.setNumber(number);
+				phone.setType(type);
+				phone.setUser(id);
 
-			phoneDAO.insert(phone);
-			request.setAttribute("msg", "registration completed succesfully");
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/Phones.jsp");
-			request.getSession().setAttribute("choosedUser", user);
-			request.setAttribute("user", user);
-			
-			request.setAttribute("listPhones", phoneDAO.findAll(id));
-			dispatcher.forward(request, response);
+				phoneDAO.insert(phone);
+				request.setAttribute("msg", "registration completed succesfully");
+
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/Phones.jsp");
+				request.getSession().setAttribute("choosedUser", user);
+				request.setAttribute("user", user);
+
+				request.setAttribute("listPhones", phoneDAO.findAll(id));
+				dispatcher.forward(request, response);
+			}
+
 		}
 	}
-
 }
