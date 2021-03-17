@@ -55,7 +55,7 @@ public class UserDAO {
 		List<BeanLogin> list = new ArrayList<>();
 
 		try {
-			String sql = "select * from public.user";
+			String sql = "select * from public.user where login <> 'admin'";
 
 			PreparedStatement ps = conn.prepareStatement(sql);
 
@@ -90,7 +90,7 @@ public class UserDAO {
 
 	public void delete(String id) {
 		try {
-			String sql = "delete from public.user where id = '" + id + "'";
+			String sql = "delete from public.user where id = '" + id + "' and login <> 'admin'";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.execute();
 			conn.commit();
@@ -105,7 +105,7 @@ public class UserDAO {
 	}
 
 	public BeanLogin findById(String id) {
-		String sql = "select * from public.user where id = '" + id + "'";
+		String sql = "select * from public.user where id = '" + id + "'  and login <> 'admin'";
 		PreparedStatement ps;
 
 		try {

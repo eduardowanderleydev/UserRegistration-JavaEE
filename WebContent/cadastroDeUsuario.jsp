@@ -79,22 +79,12 @@
 
 			<tr>
 				<td>Foto :</td>
-				<td><input type="file" name="photo" id="photo"> <input
-					type="text" readonly="readonly" style="display: none;"
-					name="photoTemp" value="${user.photoBase64}"> <input
-					type="text" readonly="readonly" style="display: none;"
-					name="contentTypePhotoTemp" value="${user.contentType}"></td>
+				<td><input type="file" name="photo" id="photo">
 			</tr>
 
 			<tr>
 				<td>Curriculo :</td>
 				<td><input type="file" name="curriculum" id="curriculum">
-					<input type="text" readonly="readonly" style="display: none;"
-					name="curriculumTemp" value="${user.curriculumBase64}"> <input
-					type="text" readonly="readonly" style="display: none;"
-					name="contentTypeCurriculumTemp"
-					value="${user.curriculumContentType}"></td>
-
 			</tr>
 
 			<tr>
@@ -130,14 +120,14 @@
 		<c:forEach items="${list}" var="user">
 			<tr>
 
-				<c:if test="${user.photoBase64Miniature.isEmpty() == false}">
+				<c:if test="${user.photoBase64Miniature != null}">
 					<td><a
 						href="salvarUsuario?acao=download&type=image&user=${user.id}">
 							<img src='<c:out value="${user.photoBase64Miniature}"></c:out>'
 							width="50px" alt="User Image" title="User Image">
 					</a></td>
 				</c:if>
-				<c:if test="${user.photoBase64Miniature.isEmpty() == true}">
+				<c:if test="${user.photoBase64Miniature == null}">
 					<td><img alt="Imagem User" width="50px"
 						src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png"
 						onclick="alert('user does not have a registered profile photo')">

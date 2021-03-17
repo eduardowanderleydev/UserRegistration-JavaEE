@@ -20,6 +20,29 @@ public class BeanLogin {
 	private String curriculumContentType;
 	private String tempPhotoUser;
 	
+	private boolean updateImage = false;
+	private boolean updateCurriculum = false;
+	
+	public boolean isUpdateImage() {
+		return updateImage;
+	}
+
+
+	public void setUpdateImage(boolean updateImage) {
+		this.updateImage = updateImage;
+	}
+
+
+	public boolean isUpdateCurriculum() {
+		return updateCurriculum;
+	}
+
+
+	public void setUpdateCurriculum(boolean updateCurriculum) {
+		this.updateCurriculum = updateCurriculum;
+	}
+
+
 	public String getPhotoBase64Miniature() {
 		return photoBase64Miniature;
 	}

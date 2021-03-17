@@ -23,7 +23,7 @@ public class ProductServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String acao = request.getParameter("acao");
+		String acao = request.getParameter("acao") != null ? request.getParameter("acao") : "list";
 		String productId = request.getParameter("product");
 
 		if (acao.equals("list")) {

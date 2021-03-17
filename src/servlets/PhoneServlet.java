@@ -28,7 +28,7 @@ public class PhoneServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String acao = request.getParameter("acao");
+		String acao = request.getParameter("acao") != null ? request.getParameter("acao") : "list";
 
 		if (acao.equalsIgnoreCase("list")) {
 
