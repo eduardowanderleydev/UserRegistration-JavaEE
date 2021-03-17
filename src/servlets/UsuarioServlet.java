@@ -179,7 +179,7 @@ public class UsuarioServlet extends HttpServlet {
 					user.setPhotoBase64Miniature(miniatureBase64);
 
 				} else {
-
+					user.setUpdateImage(false);
 				}
 
 				/* Proccess pdf */
@@ -194,10 +194,8 @@ public class UsuarioServlet extends HttpServlet {
 					user.setCurriculumContentType(curriculumPdf.getContentType());
 					user.setCurriculumBase64(curriculumBase64);
 				} else {
-					user.setCurriculumBase64(request.getParameter("curriculumTemp"));
-					user.setCurriculumContentType(request.getParameter("contentTypeCurriculumTemp"));
+					user.setUpdateCurriculum(false);
 				}
-
 			}
 
 			/* Checks the fields validations */

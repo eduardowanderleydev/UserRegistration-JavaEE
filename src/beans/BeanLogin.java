@@ -20,8 +20,8 @@ public class BeanLogin {
 	private String curriculumContentType;
 	private String tempPhotoUser;
 	
-	private boolean updateImage = false;
-	private boolean updateCurriculum = false;
+	private boolean updateImage = true;
+	private boolean updateCurriculum = true;
 	
 	public boolean isUpdateImage() {
 		return updateImage;
