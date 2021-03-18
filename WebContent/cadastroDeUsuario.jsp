@@ -1,3 +1,5 @@
+<%@page import="dao.UserDAO"%>
+<%@page import="beans.BeanLogin"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -82,7 +84,24 @@
 				<td><input type="file" name="photo" id="photo">
 				
 				<td>Ativo :</td>
-				<td><input type="checkbox" name="active" id="active">
+				<td><input type="checkbox" name="active" id="active"
+				
+				<%
+					if (request.getAttribute("user") != null){
+						BeanLogin user = (BeanLogin) request.getAttribute("user");
+						if (user.isActive()){
+							out.print("");
+							out.print("checked=\"checked\"");
+							out.print("");
+						}
+					}
+				
+				%>
+				
+				
+				
+				
+				>
 			</tr>
 
 			<tr>

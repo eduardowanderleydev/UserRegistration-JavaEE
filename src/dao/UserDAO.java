@@ -80,6 +80,7 @@ public class UserDAO {
 				user.setCurriculumBase64(rs.getString("curriculobase64"));
 				user.setCurriculumContentType(rs.getString("tipoconteudo_curriculo"));
 				user.setPhotoBase64Miniature(rs.getString("fotominiaturabase64"));
+				user.setActive(rs.getBoolean("ativo"));
 				list.add(user);
 			}
 
@@ -131,6 +132,7 @@ public class UserDAO {
 				user.setCurriculumBase64(rs.getString("curriculobase64"));
 				user.setCurriculumContentType(rs.getString("tipoconteudo_curriculo"));
 				user.setPhotoBase64Miniature(rs.getString("fotominiaturabase64"));
+				user.setActive(rs.getBoolean("ativo"));
 				return user;
 			}
 		} catch (SQLException e) {
