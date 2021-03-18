@@ -6,6 +6,7 @@ public class BeanLogin {
 	private String nome;
 	private String sexo;
 	private String fone;
+	private String profile;
 	private String login;
 	private String senha;
 	private String cep;
@@ -28,8 +29,17 @@ public class BeanLogin {
 	public boolean isUpdateImage() {
 		return updateImage;
 	}
-
 	
+	public String getProfile() {
+		return profile;
+	}
+
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
+
 	public String getSexo() {
 		return sexo;
 	}

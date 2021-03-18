@@ -33,6 +33,7 @@
 				<td>Rua :</td>
 				<td><input type="text" name="rua" id="rua" value="${user.rua}"
 					placeholder="Digite o nome da rua"></td>
+
 			</tr>
 
 			<tr>
@@ -77,63 +78,90 @@
 				<td>IBGE :</td>
 				<td><input type="text" name="ibge" id="ibge"
 					value="${user.ibge}" placeholder="Digite o número do IBGE"></td>
+
+
 			</tr>
 
 			<tr>
 				<td>Foto :</td>
 				<td><input type="file" name="photo" id="photo">
 				<td>Sexo :</td>
-				<td>
-				<input type="radio" name = "sexo"
-				<%
-				if (request.getAttribute("user") != null){
-					BeanLogin user = (BeanLogin) request.getAttribute("user");
-					if (user.getSexo() != null && user.getSexo().equals("masculino")){
-						out.print("");
-						out.print("checked=\"checked\"");
-						out.print("");
-					}
-				}
-				
-				%>
-				
-				 value="masculino"> Masculino
-				<input type="radio" name="sexo" 
-				
-				<%
-				if (request.getAttribute("user") != null){
-					BeanLogin user = (BeanLogin) request.getAttribute("user");
-					if (user.getSexo() != null && user.getSexo().equals("feminino")){
-						out.print("");
-						out.print("checked=\"checked\"");
-						out.print("");
-					}
-				}
-				
-				%>
-				value="feminino"> feminino
-				</td>
+				<td><input type="radio" name="sexo"
+					<%if (request.getAttribute("user") != null) {
+						BeanLogin user = (BeanLogin) request.getAttribute("user");
+						if (user.getSexo() != null && user.getSexo().equals("masculino")) {
+							out.print("");
+							out.print("checked=\"checked\"");
+							out.print("");
+						}
+					}%>
+					value="masculino"> Masculino <input type="radio"
+					name="sexo"
+					<%if (request.getAttribute("user") != null) {
+						BeanLogin user = (BeanLogin) request.getAttribute("user");
+						if (user.getSexo() != null && user.getSexo().equals("feminino")) {
+							out.print("");
+							out.print("checked=\"checked\"");
+							out.print("");
+						}
+					}%>
+					value="feminino"> feminino</td>
 			</tr>
 
 			<tr>
 				<td>Curriculo :</td>
 				<td><input type="file" name="curriculum" id="curriculum">
-				
 				<td>Ativo :</td>
 				<td><input type="checkbox" name="active" id="active"
-				
-				<%
-					if (request.getAttribute("user") != null){
+					<%if (request.getAttribute("user") != null) {
 						BeanLogin user = (BeanLogin) request.getAttribute("user");
-						if (user.isActive()){
+						if (user.isActive()) {
 							out.print("");
 							out.print("checked=\"checked\"");
 							out.print("");
 						}
-					}
-				
-				%>
-				>
+					}%>>
+			</tr>
+
+
+			<tr>
+				<td>Perfil de Usuário</td>
+				<td><select id="profile" name="profile">
+						<option value="not_informed">[--SELECIONE--]</option>
+						<option value="admin"
+						
+						<%if (request.getAttribute("user") != null) {
+							BeanLogin user = (BeanLogin) request.getAttribute("user");
+							if (user.getProfile() != null && user.getProfile().equalsIgnoreCase("admin")) {
+								out.print("");
+								out.print("selected=\"selected\"");
+								out.print("");
+							}
+						}%> 
+						>Admninistrador</option>
+						<option value="secretary"
+						
+						<%if (request.getAttribute("user") != null) {
+							BeanLogin user = (BeanLogin) request.getAttribute("user");
+							if (user.getProfile() != null && user.getProfile().equalsIgnoreCase("secretary")) {
+								out.print("");
+								out.print("selected=\"selected\"");
+								out.print("");
+							}
+						}%>
+						>Secretário</option>
+						<option value="manager"
+						
+						<%if (request.getAttribute("user") != null) {
+							BeanLogin user = (BeanLogin) request.getAttribute("user");
+							if (user.getProfile() != null && user.getProfile().equalsIgnoreCase("manager")) {
+								out.print("");
+								out.print("selected=\"selected\"");
+								out.print("");
+							}
+						}%>
+						>Gerente</option>
+				</select></td>
 			</tr>
 
 			<tr>
@@ -144,6 +172,17 @@
 
 		</table>
 	</form>
+
+	<form action="searchServlet" method="post">
+		<table>
+			<tr> 
+			<td>Descrição</td>
+			<td> <input type="text" name = "description" id = "search"> </td>
+			<td> <input type="submit" name = "search" id = "search "value = "Search"> </td>
+			</tr>
+		</table>
+	</form>
+
 
 	<table>
 
@@ -197,20 +236,23 @@
 						src="http://simpleicon.com/wp-content/uploads/phone-symbol-2.png">
 				</a></td>
 
-				<c:if test="${user.curriculumBase64 != null || user.curriculumBase64.isEmpty() == false}">
+				<c:if
+					test="${user.curriculumBase64 != null || user.curriculumBase64.isEmpty() == false}">
 					<td><a
 						href="salvarUsuario?acao=download&type=curriculum&user=${user.id}">
 							<img alt="Curriculo" width="40px"
 							src="https://www.ufpb.br/propesq/contents/imagens/pdf-icon.png/@@images/image.png">
 					</a></td>
 				</c:if>
-				<c:if test="${user.curriculumBase64 == nul || luser.curriculumBase64.isEmpty() == true }">
+				<c:if
+					test="${user.curriculumBase64 == nul || luser.curriculumBase64.isEmpty() == true }">
 					<td><img alt="Curriculo" width="40px"
 						src="https://www.ufpb.br/propesq/contents/imagens/pdf-icon.png/@@images/image.png"
 						onclick="alert('user does not have a registered curriculum')">
 					</td>
 				</c:if>
-				<td><a href="salvarUsuario?acao=delete&user=${user.id}" onclick="return confirm('Are you sure');" >Excluir</a></td>
+				<td><a href="salvarUsuario?acao=delete&user=${user.id}"
+					onclick="return confirm('Are you sure');">Excluir</a></td>
 				<td><a href="salvarUsuario?acao=edit&user=${user.id}">Editar</a></td>
 			</tr>
 		</c:forEach>
