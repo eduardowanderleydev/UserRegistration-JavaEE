@@ -19,7 +19,7 @@ public class UserDAO {
 	}
 
 	public void insert(BeanLogin user) {
-		String sql = "insert into public.user (login,senha,nome,fone,cep,rua,bairro,cidade,estado,ibge,fotobase64, tipoconteudo,curriculobase64,tipoconteudo_curriculo,fotominiaturabase64, ativo) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into public.user (login,senha,nome,fone,cep,rua,bairro,cidade,estado,ibge,fotobase64, tipoconteudo,curriculobase64,tipoconteudo_curriculo,fotominiaturabase64, ativo, sexo) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement ps;
 
 		try {
@@ -40,6 +40,7 @@ public class UserDAO {
 			ps.setString(14, user.getCurriculumContentType());
 			ps.setString(15, user.getPhotoBase64Miniature());
 			ps.setBoolean(16, user.isActive());
+			ps.setString(17, user.getSexo());
 			ps.execute();
 			conn.commit();
 		} catch (SQLException e) {
@@ -81,6 +82,7 @@ public class UserDAO {
 				user.setCurriculumContentType(rs.getString("tipoconteudo_curriculo"));
 				user.setPhotoBase64Miniature(rs.getString("fotominiaturabase64"));
 				user.setActive(rs.getBoolean("ativo"));
+				user.setSexo(rs.getString("sexo"));
 				list.add(user);
 			}
 
@@ -133,6 +135,7 @@ public class UserDAO {
 				user.setCurriculumContentType(rs.getString("tipoconteudo_curriculo"));
 				user.setPhotoBase64Miniature(rs.getString("fotominiaturabase64"));
 				user.setActive(rs.getBoolean("ativo"));
+				user.setSexo(rs.getString("sexo"));
 				return user;
 			}
 		} catch (SQLException e) {
@@ -149,7 +152,7 @@ public class UserDAO {
 		sql.append("bairro = ?, cidade = ?, estado = ?, ibge = ?, ativo = ? ");
 
 		if (user.isUpdateImage()) {
-			sql.append(", fotobase64 = ?, tipoconteudo = ?");
+			sql.append(", fotobase64 = ?, tipoconteudo = ?, sexo = ?");
 		}
 
 		if (user.isUpdateCurriculum()) {
@@ -176,27 +179,28 @@ public class UserDAO {
 			ps.setString(9, user.getEstado());
 			ps.setString(10, user.getIbge());
 			ps.setBoolean(11, user.isActive());
-
+			ps.setString(12, user.getSexo());
+			
 			if (user.isUpdateImage()) {
-				ps.setString(12, user.getPhotoBase64());
-				ps.setString(13, user.getContentType());
+				ps.setString(13, user.getPhotoBase64());
+				ps.setString(14, user.getContentType());
 			}
 
 			if (user.isUpdateCurriculum()) {
 				if (!user.isUpdateImage()) {
-					ps.setString(12, user.getCurriculumBase64());
-					ps.setString(13, user.getCurriculumContentType());
+					ps.setString(13, user.getCurriculumBase64());
+					ps.setString(14, user.getCurriculumContentType());
 				} else {
-					ps.setString(14, user.getCurriculumBase64());
-					ps.setString(15, user.getCurriculumContentType());
+					ps.setString(15, user.getCurriculumBase64());
+					ps.setString(16, user.getCurriculumContentType());
 				}
 			}
 
 			if (user.isUpdateImage()) {
 				if (!user.isUpdateCurriculum()) {
-					ps.setString(14, user.getPhotoBase64Miniature());
+					ps.setString(15, user.getPhotoBase64Miniature());
 				} else {
-					ps.setString(16, user.getPhotoBase64Miniature());
+					ps.setString(17, user.getPhotoBase64Miniature());
 				}
 			}
 			ps.executeUpdate();

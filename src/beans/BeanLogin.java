@@ -4,6 +4,7 @@ public class BeanLogin {
 
 	private Long id;
 	private String nome;
+	private String sexo;
 	private String fone;
 	private String login;
 	private String senha;
@@ -29,6 +30,16 @@ public class BeanLogin {
 	}
 
 	
+	public String getSexo() {
+		return sexo;
+	}
+
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+
 	public boolean isActive() {
 		return active;
 	}
