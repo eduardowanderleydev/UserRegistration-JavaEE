@@ -49,21 +49,22 @@
 	<table>
 
 		<caption>Telefones Cadastrados</caption>
-
+		
 		<tr>
 			<td>Id</td>
 			<td>Número</td>
 			<td>Tipo</td>
 			<td>Excluir</td>
 		</tr>
-
+		
 		<c:forEach items="${listPhones}" var="phone">
 			<tr>
 				<td><c:out value="${phone.id}" /></td>
 				<td><c:out value="${phone.number}" /></td>
 				<td><c:out value="${phone.type}"></c:out></td>
 				<td><a
-					href="PhoneServlet?acao=delete&phone=${phone.id}&user=${choosedUser.id}">Excluir</a></td>
+					href="PhoneServlet?acao=delete&phone=${phone.id}&user=${choosedUser.id}"
+					onclick="return confirm('Are you sure');">Excluir</a></td>
 			</tr>
 		</c:forEach>
 	</table>

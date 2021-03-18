@@ -135,7 +135,15 @@ public class UsuarioServlet extends HttpServlet {
 			user.setCidade(cidade);
 			user.setEstado(estado);
 			user.setIbge(ibge);
-
+			
+			String active = request.getParameter("active");
+			
+			if(active != null && active.equalsIgnoreCase("on")) {
+				user.setActive(true);
+			} else {
+				user.setActive(false);
+			}
+			
 			String msg = null;
 			boolean podeInserir = true;
 

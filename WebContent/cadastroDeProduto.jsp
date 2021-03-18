@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,15 +34,15 @@
 
 			<tr>
 				<td>Quantidade :</td>
-				<td><input type="number" name="quantity" id="quantity"
-					value="${product.quantity}" maxlength="10" required="required"></td>
+				<td><input type="text" name="quantity" id="quantity"
+					maxlength="5" value="${product.quantity}" required="required"></td>
 			</tr>
 
 			<tr>
 				<td>Preço :</td>
-				<td><input type="text" name="price" id="price" data-precision = "2"
-					data-thousands="." data-decimal = "," value="${product.textPrice}"
-					maxlength="10"></td>
+				<td><input type="text" name="price" id="price"
+					data-precision="2" data-thousands="." data-decimal=","
+					value="${product.textPrice}" maxlength="10"></td>
 			</tr>
 
 			<tr>
@@ -70,13 +70,13 @@
 				<td><c:out value="${product.id}" /></td>
 				<td><c:out value="${product.name}" /></td>
 				<td><c:out value="${product.quantity}" /></td>
-				<td> <fmt:formatNumber type="number" maxFractionDigits="2" value = "${product.price}"></fmt:formatNumber></td>
-				<td><a href="ProductServlet?acao=delete&product=${product.id}">Delete</a>
-				</td>
+				<td><fmt:formatNumber type="number" maxFractionDigits="2"
+						value="${product.price}"></fmt:formatNumber></td>
+				<td><a href="ProductServlet?acao=delete&product=${product.id}"
+					onclick="return confirm('Are you sure');">Delete</a></td>
 				<td><a href="ProductServlet?acao=edit&product=${product.id}">Edit</a>
 				</td>
 			</tr>
-
 		</c:forEach>
 	</table>
 
@@ -84,6 +84,12 @@
 		$(function() {
 			$('#price').maskMoney();
 		})
+
+		$(document).ready(function() {
+			$("#quantity").keyup(function() {
+				$("#quantity").val(this.value.match(/[0-9]*/));
+			});
+		});
 	</script>
 
 </body>

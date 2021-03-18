@@ -19,12 +19,23 @@ public class BeanLogin {
 	private String curriculumBase64;
 	private String curriculumContentType;
 	private String tempPhotoUser;
+	private boolean active;
 	
 	private boolean updateImage = true;
 	private boolean updateCurriculum = true;
 	
 	public boolean isUpdateImage() {
 		return updateImage;
+	}
+
+	
+	public boolean isActive() {
+		return active;
+	}
+
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 

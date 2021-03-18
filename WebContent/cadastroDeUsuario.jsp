@@ -80,6 +80,9 @@
 			<tr>
 				<td>Foto :</td>
 				<td><input type="file" name="photo" id="photo">
+				
+				<td>Ativo :</td>
+				<td><input type="checkbox" name="active" id="active">
 			</tr>
 
 			<tr>
@@ -148,20 +151,20 @@
 						src="http://simpleicon.com/wp-content/uploads/phone-symbol-2.png">
 				</a></td>
 
-				<c:if test="${user.curriculumBase64.isEmpty() == false}">
+				<c:if test="${user.curriculumBase64 != null || user.curriculumBase64.isEmpty() == false}">
 					<td><a
 						href="salvarUsuario?acao=download&type=curriculum&user=${user.id}">
 							<img alt="Curriculo" width="40px"
 							src="https://www.ufpb.br/propesq/contents/imagens/pdf-icon.png/@@images/image.png">
 					</a></td>
 				</c:if>
-				<c:if test="${user.curriculumBase64.isEmpty() == true}">
+				<c:if test="${user.curriculumBase64 == nul || luser.curriculumBase64.isEmpty() == true }">
 					<td><img alt="Curriculo" width="40px"
 						src="https://www.ufpb.br/propesq/contents/imagens/pdf-icon.png/@@images/image.png"
 						onclick="alert('user does not have a registered curriculum')">
 					</td>
 				</c:if>
-				<td><a href="salvarUsuario?acao=delete&user=${user.id}">Excluir</a></td>
+				<td><a href="salvarUsuario?acao=delete&user=${user.id}" onclick="return confirm('Are you sure');" >Excluir</a></td>
 				<td><a href="salvarUsuario?acao=edit&user=${user.id}">Editar</a></td>
 			</tr>
 		</c:forEach>
