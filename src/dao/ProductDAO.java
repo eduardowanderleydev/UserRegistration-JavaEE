@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import beans.BeanCategory;
 import beans.BeanProduct;
 import connection.SingleConnection;
 
@@ -19,7 +20,7 @@ public class ProductDAO {
 	}
 
 	public void insert(BeanProduct product) {
-		String sql = "INSERT INTO public.product (nome, qtd, valor) VALUES (?,?,?);";
+		String sql = "INSERT INTO public.product (nome, qtd, valor, categoria_id) VALUES (?,?,?,?);";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -27,7 +28,7 @@ public class ProductDAO {
 			ps.setString(1, product.getName());
 			ps.setInt(2, product.getQuantity());
 			ps.setDouble(3, product.getPrice());
-
+			ps.setLong(4, product.getCategory_id());
 			ps.execute();
 			conn.commit();
 
@@ -73,6 +74,7 @@ public class ProductDAO {
 				product.setName(rs.getString("nome"));
 				product.setPrice(rs.getDouble("valor"));
 				product.setQuantity(rs.getInt("qtd"));
+				product.setCategory_id(rs.getLong("categoria_id"));
 				list.add(product);
 			}
 
@@ -83,19 +85,19 @@ public class ProductDAO {
 	}
 
 	public BeanProduct findById(String id) {
-		String sql = "SELECT id, nome, qtd, valor FROM public.product WHERE id = " + id;
-		
+		String sql = "SELECT * FROM public.product WHERE id = " + id;
+
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			
+
 			if (rs.next()) {
 				BeanProduct product = new BeanProduct();
 				product.setId(rs.getLong("id"));
 				product.setName(rs.getString("nome"));
 				product.setPrice(rs.getDouble("valor"));
 				product.setQuantity(rs.getInt("qtd"));
-				
+				product.setCategory_id(rs.getLong("categoria_id"));
 				return product;
 			}
 
@@ -106,14 +108,14 @@ public class ProductDAO {
 	}
 
 	public void update(BeanProduct product) {
-		String sql = "update public.product set nome = ?, qtd = ?, valor = ? where id = " + product.getId();
+		String sql = "update public.product set nome = ?, qtd = ?, valor = ?, categoria_id = ? where id = " + product.getId();
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, product.getName());
 			ps.setInt(2, product.getQuantity());
 			ps.setDouble(3, product.getPrice());
-
+			ps.setLong(4, product.getCategory_id());
 			ps.executeUpdate();
 			conn.commit();
 
@@ -127,24 +129,46 @@ public class ProductDAO {
 		}
 	}
 
+	public List<BeanCategory> findAllCategories() {
+		List<BeanCategory> list = new ArrayList<BeanCategory>();
+		String sql = "select * from public.categoria";
+
+		PreparedStatement ps;
+		try {
+			ps = conn.prepareStatement(sql);
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				BeanCategory category = new BeanCategory();
+				category.setId(Long.parseLong(rs.getString("id")));
+				category.setNome(rs.getString("nome"));
+				list.add(category);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	/* Validations */
-	
+
 	public boolean validateProductName(String name) {
 		String sql = "select count (1) as qtd from public.product where nome = '" + name + "'";
-		
+
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
-			
+
 			ResultSet rs = ps.executeQuery();
-			
+
 			if (rs.next()) {
 				return rs.getInt("qtd") <= 0;
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
-	
+
 }

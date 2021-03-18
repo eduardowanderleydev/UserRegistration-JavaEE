@@ -23,25 +23,32 @@ public class ProductServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		String acao = request.getParameter("acao") != null ? request.getParameter("acao") : "list";
 		String productId = request.getParameter("product");
-
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
+		
 		if (acao.equals("list")) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
+			
 			request.setAttribute("list", productDAO.findAll());
-			dispatcher.forward(request, response);
+			request.setAttribute("categories", productDAO.findAllCategories());
+		
 		} else if (acao.equals("delete")) {
+		
 			productDAO.delete(productId);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
 			request.setAttribute("list", productDAO.findAll());
-			dispatcher.forward(request, response);
+		
 		} else if (acao.equals("edit")) {
+		
 			BeanProduct product = productDAO.findById(productId);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
 			request.setAttribute("product", product);
 			request.setAttribute("list", productDAO.findAll());
-			dispatcher.forward(request, response);
+			
 		}
+		
+		request.setAttribute("categories", productDAO.findAllCategories());
+		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -52,6 +59,7 @@ public class ProductServlet extends HttpServlet {
 		if (acao != null && acao.equals("reset")) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
 			request.setAttribute("list", productDAO.findAll());
+			request.setAttribute("categories", productDAO.findAllCategories());
 			dispatcher.forward(request, response);
 		} else {
 
@@ -59,7 +67,8 @@ public class ProductServlet extends HttpServlet {
 			String name = request.getParameter("name");
 			String quantity = request.getParameter("quantity");
 			String price = request.getParameter("price");
-
+			String category = request.getParameter("category_id");
+			
 			boolean podeInserir = true;
 			String msg = "";
 
@@ -82,6 +91,7 @@ public class ProductServlet extends HttpServlet {
 			BeanProduct product = new BeanProduct();
 			product.setName(name);
 			product.setId(!id.isEmpty() ? Long.parseLong(id) : 0);
+			product.setCategory_id(Long.parseLong(category));
 			
 			if (quantity != null && !quantity .isEmpty()) {
 				product.setQuantity(Integer.parseInt(quantity));
@@ -106,6 +116,7 @@ public class ProductServlet extends HttpServlet {
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroDeProduto.jsp");
 			request.setAttribute("list", productDAO.findAll());
+			request.setAttribute("categories", productDAO.findAllCategories());
 			request.setAttribute("msg", msg);
 			dispatcher.forward(request, response);
 		}

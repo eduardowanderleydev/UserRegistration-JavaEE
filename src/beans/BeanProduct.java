@@ -6,8 +6,17 @@ public class BeanProduct {
 	private String name;
 	private int quantity;
 	private double price;
-	
-	public BeanProduct () {
+	private Long category_id;
+
+	public Long getCategory_id() {
+		return category_id;
+	}
+
+	public void setCategory_id(Long category_id) {
+		this.category_id = category_id;
+	}
+
+	public BeanProduct() {
 	}
 
 	public long getId() {
@@ -41,9 +50,9 @@ public class BeanProduct {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
+
 	public String getTextPrice() {
 		return Double.toString(price).replace('.', ',');
 	}
-	
+
 }

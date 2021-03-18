@@ -44,7 +44,24 @@
 					data-precision="2" data-thousands="." data-decimal=","
 					value="${product.textPrice}" maxlength="10"></td>
 			</tr>
-
+	
+	
+			<tr> 
+			<td> Categoria </td>
+			<td> <select id="category_id" name="category_id">
+				<c:forEach items="${categories}" var="category">
+					<option value="${category.id}" id="${category.id}"
+					
+					<c:if test = "${category.id == product.category_id}">
+						<c:out value = "selected=selected"/>
+					</c:if>
+					
+					>${category.name } </option>				
+				</c:forEach>			
+			
+			  </select> </td>
+			</tr>
+	
 			<tr>
 				<td><input type="submit" value="Save"></td>
 				<td><input type="submit" value="Cancel"
