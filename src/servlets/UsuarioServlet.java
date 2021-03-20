@@ -123,7 +123,7 @@ public class UsuarioServlet extends HttpServlet {
 			String ibge = request.getParameter("ibge");
 			String sexo = request.getParameter("sexo");
 			String perfil = request.getParameter("profile");
-			
+
 			BeanLogin user = new BeanLogin();
 			user.setId(!id.isEmpty() ? Long.parseLong(id) : null);
 			user.setLogin(login);
@@ -139,15 +139,15 @@ public class UsuarioServlet extends HttpServlet {
 			user.setIbge(ibge);
 			user.setSexo(sexo);
 			user.setProfile(perfil);
-			
+
 			String active = request.getParameter("active");
-			
-			if(active != null && active.equalsIgnoreCase("on")) {
+
+			if (active != null && active.equalsIgnoreCase("on")) {
 				user.setActive(true);
 			} else {
 				user.setActive(false);
 			}
-			
+
 			String msg = null;
 			boolean podeInserir = true;
 
@@ -222,11 +222,20 @@ public class UsuarioServlet extends HttpServlet {
 				msg = "Password cannot be empty";
 			} else {
 				/* Checks the validation of occurrence in the database */
-				if (id == null || id.isEmpty() && !userDAO.validateLogin(login)) {
+				if (id == null && !userDAO.validateLogin(login) || id.isEmpty() && !userDAO.validateLogin(login)) {
 					msg = "Login already exists";
 					podeInserir = false;
+				} else if (id == null && !userDAO.validatePassword(senha)
+						|| id.isEmpty() && !userDAO.validatePassword(senha)) {
+					msg = "Password already exists";
+					podeInserir = false;
 				}
-				if (id == null || id.isEmpty() && !userDAO.validatePassword(senha)) {
+				if (id != null && !userDAO.validateLoginUpdate(user.getLogin(), id)
+						|| !id.isEmpty() && !userDAO.validateLoginUpdate(user.getLogin(), id)) {
+					msg = "Login already exists";
+					podeInserir = false;
+				} else if (id != null && !userDAO.validatePasswordUpdate(user.getSenha(), id)
+						|| !id.isEmpty() && !userDAO.validatePasswordUpdate(user.getSenha(), id)) {
 					msg = "Password already exists";
 					podeInserir = false;
 				}
@@ -239,7 +248,8 @@ public class UsuarioServlet extends HttpServlet {
 			if (id == null || id.isEmpty() && podeInserir) {
 				userDAO.insert(user);
 				msg = "registration successfully completed";
-			} else if (id != null || !id.isEmpty() && podeInserir) {
+			} else if (id != null && podeInserir || !id.isEmpty() && podeInserir) {
+				msg = "update successfully completed";
 				userDAO.update(user);
 			}
 
