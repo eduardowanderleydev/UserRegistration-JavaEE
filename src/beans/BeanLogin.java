@@ -5,7 +5,6 @@ public class BeanLogin {
 	private Long id;
 	private String nome;
 	private String sexo;
-	private String fone;
 	private String profile;
 	private String login;
 	private String senha;
@@ -20,7 +19,6 @@ public class BeanLogin {
 	private String contentType;
 	private String curriculumBase64;
 	private String curriculumContentType;
-	private String tempPhotoUser;
 	private boolean active;
 	
 	private boolean updateImage = true;
@@ -84,13 +82,6 @@ public class BeanLogin {
 		this.photoBase64Miniature = photoBase64Miniature;
 	}
 
-
-	public String getTempPhotoUser() {
-		tempPhotoUser = "data:" + this.contentType + ";base64," + photoBase64;
-		return tempPhotoUser;
-	}
-
-	
 	public String getCurriculumContentType() {
 		return curriculumContentType;
 	}
@@ -175,14 +166,6 @@ public class BeanLogin {
 
 	public Long getId() {
 		return id;
-	}
-
-	public String getFone() {
-		return fone;
-	}
-
-	public void setFone(String fone) {
-		this.fone = fone;
 	}
 
 	public void setId(Long id) {

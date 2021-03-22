@@ -113,7 +113,6 @@ public class UsuarioServlet extends HttpServlet {
 			String login = request.getParameter("login");
 			String senha = request.getParameter("senha");
 			String nome = request.getParameter("nome");
-			String fone = request.getParameter("fone");
 
 			String cep = request.getParameter("cep");
 			String rua = request.getParameter("rua");
@@ -129,7 +128,6 @@ public class UsuarioServlet extends HttpServlet {
 			user.setLogin(login);
 			user.setSenha(senha);
 			user.setNome(nome);
-			user.setFone(fone);
 
 			user.setCep(cep);
 			user.setRua(rua);
@@ -162,14 +160,14 @@ public class UsuarioServlet extends HttpServlet {
 					byte[] image = StreamToByte(imagePhoto.getInputStream());
 
 					new Base64();
-					String photoBase64 = Base64.encodeBase64String(image); // change
-																			// the
+					String photoBase64 = Base64.encodeBase64String(image);
+					
 					// set the attributes in the user
 					user.setPhotoBase64(photoBase64);
 					user.setContentType(imagePhoto.getContentType());
 
 					/* change image to miniature */
-
+					
 					new Base64();
 					byte[] imageByteDecode = Base64.decodeBase64(photoBase64);
 
@@ -262,7 +260,6 @@ public class UsuarioServlet extends HttpServlet {
 			request.setAttribute("list", userDAO.findAll());
 			dispatcher.forward(request, response);
 		}
-
 	}
 
 	/* Change the flow input data from image to a byte array */

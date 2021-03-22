@@ -19,7 +19,7 @@ public class UserDAO {
 	}
 
 	public void insert(BeanLogin user) {
-		String sql = "insert into public.user (login,senha,nome,fone,cep,rua,bairro,cidade,estado,ibge,fotobase64, tipoconteudo,curriculobase64,tipoconteudo_curriculo,fotominiaturabase64, ativo, sexo, perfil) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into public.user (login,senha,nome,cep,rua,bairro,cidade,estado,ibge,fotobase64, tipoconteudo,curriculobase64,tipoconteudo_curriculo,fotominiaturabase64, ativo, sexo, perfil) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		PreparedStatement ps;
 
 		try {
@@ -27,7 +27,6 @@ public class UserDAO {
 			ps.setString(1, user.getLogin());
 			ps.setString(2, user.getSenha());
 			ps.setString(3, user.getNome());
-			ps.setString(4, user.getFone());
 			ps.setString(5, user.getCep());
 			ps.setString(6, user.getRua());
 			ps.setString(7, user.getBairro());
@@ -79,7 +78,6 @@ public class UserDAO {
 				user.setLogin(rs.getString("login"));
 				user.setSenha(rs.getString("senha"));
 				user.setNome(rs.getString("nome"));
-				user.setFone(rs.getString("fone"));
 				user.setCep(rs.getString("cep"));
 				user.setRua(rs.getString("rua"));
 				user.setBairro(rs.getString("bairro"));
@@ -132,7 +130,6 @@ public class UserDAO {
 				user.setLogin(rs.getString("login"));
 				user.setSenha(rs.getString("senha"));
 				user.setNome(rs.getString("nome"));
-				user.setFone(rs.getString("fone"));
 				user.setCep(rs.getString("cep"));
 				user.setRua(rs.getString("rua"));
 				user.setBairro(rs.getString("bairro"));
@@ -159,7 +156,7 @@ public class UserDAO {
 
 		StringBuilder sql = new StringBuilder();
 
-		sql.append("update public.user set login = ?, senha = ?, nome = ?, fone = ?, cep = ?, rua = ?, ");
+		sql.append("update public.user set login = ?, senha = ?, nome = ?, cep = ?, rua = ?, ");
 		sql.append("bairro = ?, cidade = ?, estado = ?, ibge = ?, ativo = ?, sexo = ?, perfil = ?");
 
 		if (user.isUpdateImage()) {
@@ -182,37 +179,36 @@ public class UserDAO {
 			ps.setString(1, user.getLogin());
 			ps.setString(2, user.getSenha());
 			ps.setString(3, user.getNome());
-			ps.setString(4, user.getFone());
-			ps.setString(5, user.getCep());
-			ps.setString(6, user.getRua());
-			ps.setString(7, user.getBairro());
-			ps.setString(8, user.getCidade());
-			ps.setString(9, user.getEstado());
-			ps.setString(10, user.getIbge());
-			ps.setBoolean(11, user.isActive());
-			ps.setString(12, user.getSexo());
-			ps.setString(13, user.getProfile());
+			ps.setString(4, user.getCep());
+			ps.setString(5, user.getRua());
+			ps.setString(6, user.getBairro());
+			ps.setString(7, user.getCidade());
+			ps.setString(8, user.getEstado());
+			ps.setString(9, user.getIbge());
+			ps.setBoolean(10, user.isActive());
+			ps.setString(11, user.getSexo());
+			ps.setString(12, user.getProfile());
 
 			if (user.isUpdateImage()) {
-				ps.setString(14, user.getPhotoBase64());
-				ps.setString(15, user.getContentType());
+				ps.setString(13, user.getPhotoBase64());
+				ps.setString(14, user.getContentType());
 			}
 
 			if (user.isUpdateCurriculum()) {
 				if (!user.isUpdateImage()) {
-					ps.setString(14, user.getCurriculumBase64());
-					ps.setString(15, user.getCurriculumContentType());
+					ps.setString(13, user.getCurriculumBase64());
+					ps.setString(14, user.getCurriculumContentType());
 				} else {
-					ps.setString(16, user.getCurriculumBase64());
-					ps.setString(17, user.getCurriculumContentType());
+					ps.setString(15, user.getCurriculumBase64());
+					ps.setString(16, user.getCurriculumContentType());
 				}
 			}
 
 			if (user.isUpdateImage()) {
 				if (!user.isUpdateCurriculum()) {
-					ps.setString(16, user.getPhotoBase64Miniature());
+					ps.setString(15, user.getPhotoBase64Miniature());
 				} else {
-					ps.setString(18, user.getPhotoBase64Miniature());
+					ps.setString(17, user.getPhotoBase64Miniature());
 				}
 			}
 			ps.executeUpdate();
