@@ -1,0 +1,181 @@
+@charset "UTF-8";
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	font-family: 'Poppins', sans-serif;
+	background: url("images/background 1.jpg")no-repeat;
+}
+
+img{
+	background-repeat: no-repeat;
+	position: fixed center;
+}
+.nav{
+	flex: 1;
+	text-align: center;
+	padding-top: 30px;
+}
+
+.nav ul li{
+	list-style: none;
+	display: inline-block;
+	margin-right: 50px;
+	position: relative;
+}
+
+.nav ul li a{
+	text-decoration: none;
+	text-transform: uppercase;
+	color: #fff;
+}
+
+.nav ul li::after{
+	content: '';
+	height: 2px;
+	width: 0%;
+	background: #19a1ad;
+	position: absolute;
+	left: 0;
+	bottom: -10px;
+	transition: 0.5s;
+}
+
+.nav ul li:hover:after{
+	width: 100%;
+}
+
+
+
+.text-box{
+	width: 600px;
+	height: 300px;
+	display: flex;
+	margin: auto;
+	margin-top: 117px;
+ 	justify-content: center;
+}
+h1{
+	text-align: center;
+	font-size: 50px;
+	font-weight: bold;
+}
+
+.box-buttom li{
+	list-style: none;
+	padding-top: 35px;
+	padding-left: 20px;
+}
+
+.box-buttom li a{
+	padding-left: 37%;
+	color: #fff;
+	text-decoration: none;
+	text-transform: uppercase;
+	background-color: #ff0157;
+	letter-spacing: 2px;
+	transition: 0.7s;
+}
+
+.box-buttom li a:hover{
+
+	background-color: #19a1ad;
+	letter-spacing: 6px;
+}
+
+
+h3{
+	text-align: justify;
+	padding-top: 10px;
+	line-height: 25px;
+	font-size: 15px;
+	color: #adacb1;
+}
+
+.srv{
+	
+	width: 1000px;
+	height: 500px;
+	margin: auto;
+}
+
+.info{
+	text-align: center;
+
+}
+
+.info h1{
+	font-size: 35px;
+	font-weight: bold;
+}
+
+.info h2{
+	font-size: 20px;
+	padding-top: 30px;
+	padding-left: 20px;
+	text-align: left;
+}
+
+.tec{
+	display: inline-flex;
+}
+
+.tec1{
+	width: 300px;
+}
+
+.tec1 ul li{
+	list-style: none;
+	text-align: left;
+	padding-top: 13px;
+	padding-left: 20px;
+	color: #19a1ad;
+	font-weight: bold;
+}
+
+.cor{
+	color: #ff0157;
+	font-weight: bold;
+}
+
+.tec2{
+	width: 300px;
+}
+
+.tec2 ul li{
+	list-style: none;
+	text-align: right;
+	padding-top: 13px;
+	padding-left: 20px;
+	color: #19a1ad;
+	font-weight: bold;
+}
+
+.tec2 h2{
+	text-align: right;
+}
+
+.about{
+	margin: 0 auto;
+	width: 1000px;
+	height: 330px;
+	display: inline-block;
+}
+h2{
+	text-align: center;
+	font-weight: bold;
+}
+.about img{
+	float: left;
+	width: 250px;
+	margin-top: 30px;
+}
+
+.text-about h3{
+	text-align: justify;
+	font-size: 13px;
+	margin-top: 62.5px;
+	margin-left: 300px;
+}
