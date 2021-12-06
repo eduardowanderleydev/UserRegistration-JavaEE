@@ -33,10 +33,10 @@
 ### Techs
 The following technologies were used in the construction of the project:
 
-- [Servlets](https://spring.io/projects/spring-boot)
-- [JSP](https://spring.io/projects/spring-security)
-- [PostgreSQL](https://spring.io/projects/spring-data-jpa)
-- [HTML5](https://reportserver.net/en/documentation/)
+- Servlets
+- JSP
+- PostgreSQL
+- HTML5
 
 ---
 ### Author
