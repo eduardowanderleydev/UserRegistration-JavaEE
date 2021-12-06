@@ -5,7 +5,7 @@
 	id="WebApp_ID" version="4.0">
 	<display-name>curso-jsp</display-name>
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>Login.jsp</welcome-file>
 	</welcome-file-list>
 
 	<filter>
